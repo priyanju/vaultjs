@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+    <div ng-include="'header.html'"></div>
+    <div ng-include="'sidebar.html'"></div>
+      <div class="page home-page">
+
+    <section class="statistics section-padding section-no-padding-bottom section_top">
+        <div class="container-fluid">
+          <header>
+	        <div ng-show="myLoader" class="spinner">
+	            <img src="assets/images/spinner.gif" class="myspin">
+	        </div>
+	        
+	        <h1 class="h3 display reprttop" style="float: left;"><i class="fa fa-laptop"></i>Shift Part
+	      
+	        </h1>
+	         <a href="" ng-hide="role_Setup == 'operator'" class="btn_add" data-toggle="modal" data-target="#exampleModalLabel" ng-click="cleandata()"><i class="fa fa-plus" aria-hidden="true"></i></a>
+          </header>
+          <br>
+          <div class="card card_status">
+             <div class="card-block">
+                   <form name="repot">
+                  <div class="row">
+                         
+                      <div class="col-md-3">
+                          <div class="form-group">
+                              <div class="form-group">
+                                    <div class="select">
+                                        <label>Machine Name</label>
+                                      <select name="account" class="form-control" ng-options="mc.id as mc.machine_name for mc in allmachines" ng-model="MachineID" ng-change="checkingmachineid()" ng-Required="true">
+                                          <option value="">Select Machine</option>
+                                      </select>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                    
+
+                      <div class="col-md-3" >
+                        <div class="form-group">
+                            <div class="form-group">
+                                <div class="select">
+                                        <label>Shift No</label>
+                                    <select name="account" class="form-control" ng-options="sh.id as (sh.shift_no + ' (' + sh.shift_start_time +'-'+ sh.shift_end_time + ')') for sh in shiftstransfordrop" ng-model="ShiftID"  ng-change="checkingshiftid()" ng-Required="true">
+                                        <option value="">Select Shift</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                      
+
+                     
+
+                      <div class="col-md-3">
+                          
+                            <label>Date</label>
+
+                          <div class="form-group" moment-picker="from_date"  format="YYYY-MM-DD" min-date="momentToday2" max-date="momentToday">
+                                <div class="input-group"><span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                  <input type="text" class="form-control" readonly ng-Required="true"  ng-model="from_date"  >
+                              </div>
+                          </div>
+                      </div>
+                      
+                      <div class="col-md-3"> 
+                         
+                          <div class="form-group">
+                              <div class="form-group">
+                                  <button class="btn btn-success btn_report" ng-click="viewReport()" ng-disabled="repot.$invalid"><i class="fa fa-eye" aria-hidden="true"></i> Report</button>
+                              </div>
+                          </div>
+                      </div>
+
+
+                  </div>
+                </form>
+           </div>
+        </div>
+     </div>
+    </section>
+    <section class="updates">
+       <div class="container-fluid" >
+	        <table class="table table-striped scroll-table" >
+	             <thead>
+	                <tr>
+	                    <th>Date</th>
+                        <th>Shift</th>
+                        <th>program_number</th>
+                        <th>part</th>
+                        <th>Status</th>
+                       </tr>
+	            </thead>
+	            <tbody>
+	                <tr ng-repeat="item in values">
+	                    <td>{{ item.date }}</td>
+	                    <td>{{ item.shift_no }}</td>
+	                    <td>{{ item.program_number }}</td>
+	                    <td>{{ item.part }}</td>
+	                    <td ng-show="item.status == null">0</td>
+	                    <td >{{ item.status }}</td>
+	                    <td>
+                                                <ul>
+                                                	<button ng-click="accept('1',item.id)">accpect</button>
+                                                	<button ng-click="accept('2',item.id)">rework</button>
+                                                	<button ng-click="accept('3',item.id)">reject</button>
+                                                    <li>
+                                                        <a class="remove"> <i class="fa fa-trash-o " confirmed-click="delete(item.id)"  ng-confirm-click="Do you want to delete"></i> </a>
+                                                    </li>
+                                               
+                                                </ul>
+                                            </td>
+		                </tr>
+             
+	            </tbody>
+	        </table>
+	    </div>
+      <!-- <div class="container-fluid"> 
+        <div ng-app="hmi" ng-controller="hmiController" ng-hide="view_report" style="height:100% !important">  
+        </div> 
+      </div> -->
+    
+    </section>
+   <div class="modal fade" id="exampleModalLabel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Parts Registration</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body machine-registration">
+            <form name="operatorall">
+                    <div class="col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <div class="form-group">
+                                      <div class="select">
+                                          <label>Machine Name</label>
+                                        <select name="account" class="form-control" ng-options="mc.id as mc.machine_name for mc in allmachines" ng-model="MachineID" ng-change="checkingmachineid()" ng-Required="true">
+                                            <option value="">Select Machine</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+
+                        <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <div class="select">
+                                                <label>Shift No</label>
+                                            <select name="account" class="form-control" ng-options="sh.id as (sh.shift_no + ' (' + sh.shift_start_time +'-'+ sh.shift_end_time + ')') for sh in shiftstransfordrop" ng-model="ShiftID"  ng-change="checkingshiftid()" ng-Required="true">
+                                                <option value="">Select Shift</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                              
+
+                            <div class="col-md-6 col-sm-12">
+                          
+                                    <label>Date</label>
+        
+                                  <div class="form-group" moment-picker="from_date"  format="YYYY-MM-DD" min-date="momentToday2" max-date="momentToday">
+                                        <div class="input-group"><span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                          <input type="text" class="form-control" readonly ng-Required="true"  ng-model="from_date">
+                                      </div>
+                                  </div>
+                              </div>
+               <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                  <label for="register-tenant_name" class="label-custom">Program Number<span style="color: red;">*</span></label>
+                  <input  type="text" name="tenant_name" ng-model="shiftdetails.program_number" ng-Required="true">
+                </div>
+              </div>
+
+                <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label for="register-tenant_name" class="label-custom">Parts Count<span style="color: red;">*</span></label>
+                  <input  type="number" name="tenant_name" ng-model="shiftdetails.part" ng-Required="true">
+                </div>
+              </div>
+
+
+
+            <button type="button" class="btn btn-primary" ng-disabled="operatorall.$invalid" ng-click="shiftparts()" data-dismiss="modal">Save</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  
+  
+  <div ng-include="'footer.html'"></div>
+ </div>
+
+</body>
+</html>

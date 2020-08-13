@@ -1,0 +1,188 @@
+ <div ng-include="'header.html'"></div>
+ <div ng-include="'sidebar.html'"></div>
+   <div class="page home-page">
+
+ <section class="statistics section-padding section_top">
+            <div class="container-fluid">
+                <div class="row">
+                  <!-- <div ng-show="myLoader" class="spinner">
+                            <img src="assets/images/spinner1.gif" class="myspin">
+                        </div> -->
+                    <!-- Daily Feed-->
+                    <div class="col-lg-5 col-md-5">
+                        <header>
+                            <h1 class="h3 display"><i class="fa fa-bell-o"></i>{{'shiftregistration' | translate }}
+                            <a ng-hide="role_Setup == 'operator' || role_Setup == 'supervisor'" href="" class="btn_add" data-toggle="modal" data-target="#exampleModalLabel" ng-if="shiftdetails.id == null" ng-click="cleandata()"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                            <!--span class="note">(Note: Enter your day start time)</span-->
+                          </h1>
+                        </header>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <!-- Monthly Usage-->
+                                <div class="card shifts">
+                                    <div class="machine_edits shift_edits_main">
+                                        <div ng-hide="email == 'demo@gmail.com'"  ng-hide="role_Setup == 'operator' || role_Setup == 'supervisor'" class="edit" ng-click="edit(shiftdetails.id)" data-toggle="modal" data-target="#exampleModalLabel"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></div>
+                                        <!-- <div class="delete"><i class="fa fa-trash-o" aria-hidden="true"></i></div> -->
+                                    </div>
+                                    <div class="play_circle"><i class="fa fa-play-circle-o" aria-hidden="true"></i></div>
+                                    <h1>{{'daystarttime' | translate }}</h1>
+                                    <h2>{{shiftdetails.day_start_time }}</h2>
+                                    <div class="row status_icon shift">
+                                        <div class="col-md-6 status_first">
+                                            <i class="fa fa-clock-o"></i> {{'workingtime' | translate }} {{shiftdetails.working_time }}
+                                        </div>
+                                        <div class="col-md-6">
+                                            <i class="fa fa-cog" aria-hidden="true"></i> {{'numberofshift' | translate }} {{shiftdetails.no_of_shift }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                        <header>
+                            <h1 class="h3 display"><i class="fa fa-laptop"></i>{{'shifttransactionregistration' | translate }}
+                            <a ng-hide="email == 'demo@gmail.com'" ng-hide="role_Setup == 'operator' || role_Setup == 'supervisor'" href="" class="btn_add" data-toggle="modal" data-target="#exampleModalLabel1" ng-click="cleandata()"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                            <!--span class="note">(Note: Please register your break details under the actions tab for each shift)</span-->
+                          </h1>
+                        </header>
+                        <div class="card">
+                            <div class="card-block tablescroll">
+                                <table class="table table-striped table-sm table_front">
+                                    <thead>
+                                        <tr>
+                                            <th>{{'shiftstarttime' | translate }}</th>
+                                            <th>{{'shiftendtime' | translate }}</th>
+                                            <th>{{'actualworkinghours' | translate }}</th>
+                                            <th ng-hide="role_Setup == 'operator' || role_Setup == 'supervisor'">{{'action' | translate }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="shift in shiftstrans">
+                                            <td>{{ shift.shift_start_time }}</td>
+                                            <td>{{ shift.shift_end_time }}</td>
+                                            <td>{{ shift.actual_working_hours }}</td>
+                                            <td>
+                                                <ul class="item-actions-list" ng-hide="role_Setup == 'operator' || role_Setup == 'supervisor'">
+                                                    <li>
+                                                        <a  ng-hide="email == 'demo@gmail.com'" class="remove"> <i class="fa fa-trash-o " confirmed-click="delete1(shift.id)"  ng-confirm-click="Do you want to delete"></i> </a>
+                                                    </li>
+                                                    <li>
+                                                        <a ng-hide="email == 'demo@gmail.com'" class="edit" data-toggle="modal" data-target="#exampleModalLabel1" title="Edit" ng-click="edit1(shift.id)"> <i class="fa fa-pencil"></i> </a>
+                                                    </li>
+                                                    <!-- <li>
+                                                        <a class="create" title=" creation"> <i class="fa fa-plus" ng-click="breaktime(shift.id)"></i> </a>
+                                                    </li> -->
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    <!-- modal -->
+    <div class="modal fade" id="exampleModalLabel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{'shiftregistration' | translate }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label>{{'daystarttime' | translate}}</label>
+                            <input type="text" placeholder="{{'daystarttime' | translate }}" class="form-control" ng-Required="true" ng-model="shiftregistration.day_start_time_dummy" size="8" bs-timepicker>
+                        </div>
+                        <div class="form-group">
+                            <label>{{'workingtime' | translate }}</label>
+                            <input type="text" placeholder="{{'workingtime' | translate }}" class="form-control" ng-Required="true" ng-model="shiftregistration.working_time_dummy"  size="8"   data-time-type="time" data-time-format="HH:mm:ss" bs-timepicker>
+                        </div>
+                        <div class="form-group">
+                            <label>{{'numberofshift' | translate }}</label>
+                            <input type="text" placeholder="{{'numberofshift' | translate }}" class="form-control" ng-Required="true" ng-model="shiftregistration.no_of_shift">
+                        </div>
+
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-disabled="shiftreg.$invalid" ng-click="shiftform()" data-dismiss="modal">{{'save'| translate}}</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{'close' | translate }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <!-- modal -->
+    <div class="modal fade" id="exampleModalLabel1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{'shiftregistration' | translate }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form name="shifttran">
+                        <div class="form-group">
+                            <label>{{'shiftstarttime' | translate }}</label>
+                            <input type="text" placeholder="{{'starttime' | translate }}" class="form-control" ng-Required="true" ng-model="shifttransaction.shift_start_time_dummy" ng-readonly="false" size="8"   bs-timepicker>
+                        </div>
+                         <div class="form-group">
+                            <label>{{'shiftendtime' | translate }}</label>
+                            <input type="text" placeholder="{{'endtime' | translate }}" class="form-control" ng-Required="true" ng-model="shifttransaction.shift_end_time_dummy"  size="8"  bs-timepicker>
+                        </div>
+                        <div class="form-group">
+                            <label>{{'shiftnumber' | translate }}</label>
+                            <input type="text" placeholder="{{'shiftnumber' | translate }}" class="form-control" ng-Required="true" ng-model="shifttransaction.shift_no">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Start Day</label>
+                                    <select class="form-control" ng-Required="true" ng-model="shifttransaction.start_day">
+                                            <option value="">Start date</option>
+                                            <option value="1">Day 1</option>
+                                            <option value="2">Day 2</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                            <div class="form-group">
+                                    <label>End Day</label>
+                                    <select class="form-control" ng-Required="true" ng-model="shifttransaction.end_day">
+                                            <option value="">End date</option>
+                                            <option value="1">Day 1</option>
+                                            <option value="2">Day 2</option>
+              
+                                        </select>
+                            </div>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-disabled="shifttran.$invalid" ng-click="newshifttrans()" data-dismiss="modal">{{'save' | translate }}</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{'close' | translate }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+         <div ng-include="'footer.html'"></div>
+ </div>

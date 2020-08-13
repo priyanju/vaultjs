@@ -1,0 +1,430 @@
+<style>
+    
+
+
+  /* .split { */
+  /* height: 100%;
+  width: 40%;
+  position: fixed;  */
+   /* z-index: 1; 
+   overflow-x: hidden;
+  padding-top: 20px;  */
+/* }  */
+
+/* Control the left side */
+/* .left { */
+  /* left: 0; */
+   
+/* }  */
+
+/*Control the right side */
+ .right {
+  /* right: 0; */
+  background-color:lightslategrey;
+  color:white;
+} 
+
+div.container.upload {
+  top:10px;
+}
+
+div.col-md-12 {
+  padding: 0;
+}
+
+.col-md-2.contro-label {
+  padding: 10px;
+  font-size: 16px;
+}
+
+.col-md-4.contro-label {
+  padding: 8px 15px 0px 15px;
+  font-size: 16px;
+}
+
+label.col-md-4.control-label { 
+  font-size: 16px;
+}
+
+table {
+ width: 100%;
+}
+
+th {
+  text-align: left;
+  padding: 5px;
+}
+td {
+  padding: 10px;
+}
+.modal-body{
+  padding: 25px;
+}
+input.base {
+  border: 1px solid #d2d2d2;
+  background-color: #ffffff;
+  color: #2d2d2d;
+  padding: 8px 11px;
+  font-size: 14px;
+  font-weight: 500;
+  width:100%;
+}
+
+.Download{
+  float: left;
+  width: 33.33%;
+  /* padding: 2px; */
+  /* height: 300px;  */
+}
+</style>
+
+
+<div ng-include="'header.html'"></div>
+<div ng-include="'sidebar.html'"></div>
+<div class="page home-page">
+ 
+ <section class="viewtwo section-padding section-no-padding-bottom section_top" ng-init="machineinit()">
+     <div ng-show="myLoader" class="spinner">
+      <img src="assets/images/spinner.gif"> <!-- https://media1.tenor.com/images/a3bf29a2520198ddcbef0958f3761e14/tenor.gif?itemid=11391686.gif -->
+     </div>
+      <div class="container-fluid upload">
+          <header>
+              <div ng-show="myLoader" class="spinner">
+                  <img src="assets/images/spinner.gif" class="myspin">
+              </div>
+              <h1 class="h3 display machinereg"><i class="fa fa-desktop" aria-hidden="true"></i> 
+              Machine Name</h1>
+          </header>
+              <div class="row pt-3 pb-3">
+                        <!-- <div class="col-sm-6 v_mid">   -->
+                          <!-- <div class="test"> -->
+                              
+                              <div class="col-md-4">
+                                <select name="account" class="form-control" ng-options="mc.id as mc.machine_name for mc in allmachines"
+                                    ng-model="MachineID;"  ng-Required="true" ng-change="machineChange(MachineID)">
+                                    <option value="">{{'selectmachine' | translate }}</option>
+                                </select>
+                              </div>
+
+                              
+                              <div class="col-md-6">
+                                  <button type="button" class="float-left btn_top btn" data-toggle="modal" data-target="#modalUpload">File Upload</button>
+                              </div>
+                          <!-- </div>
+                        </div>  -->
+          </div> 
+          
+ 
+        
+        <div class="row">
+          <div class="col-md-6">  
+
+
+
+            <h1>Master</h1>
+                   
+                      <div class="table_wrapper viewtwotable"> 
+                       <table class="table">
+                         <tr>
+                           <h2><th>Name</th></h2>
+                           
+                           <!-- <th>Date Modified</th>
+                           <th>Type</th>
+                           <th>File Size</th> -->
+                           <th>Actions</th> 
+
+                          </tr>
+                          <!-- <tr ng-repeat="master in masterList | orderBy:'name'"> -->
+                            <tr ng-repeat="master in masterList">
+                              <td>{{master}}</td>
+
+                              <!-- <td><i class="fa fa-file" style="font-size:20px;color:#2d2d2f"></i>
+                                &nbsp;{{master.name}}</td> -->
+                              <!-- <td>{{master['attributes']['attributes'].mtime*1000 | date : format : 'M/d/y H:m:s'}}</td>
+                              <td>{{'File'}}</td> -->
+                              <!-- <td>{{master['attributes']['attributes'].size}}</td>
+                              <td> -->
+                                <!-- <div class="role-setup" ng-hide="master.name=='.' || master.name=='..'">
+                                    
+
+                                  
+                                    <div  class="delete" data-toggle="modal" data-target="#modal-1" ng-click="deleteDialog(master,'Master')"><i class="fa fa-trash-o" aria-hidden="true"></i></div> -->
+
+
+                                  
+                                   
+                                    <td>
+
+                                      
+                                   <div><a  class="Download" ng-click="download(master,'Master')" data-toggle="modal" data-target="#machine" ><i class="fa fa-download" aria-hidden="true"></i></a></div>
+
+                                    <div><a  class="Download" ng-click="upload(master)" data-toggle="modal" data-target="#machine" ><i class="fa fa-send" aria-hidden="true"></i></a></div>
+
+                                    <!-- <div><a  class="Download" ng-click="new(master)" data-toggle="modal" data-target="#machine" ><i class="fa fa-send" aria-hidden="true"></i></a></div> -->
+   
+                                </div> 
+                            </td>  
+                             </tr>
+                         </table>   
+                           
+                         <div ng-if="length2 ==0">
+
+                          No Results Found
+
+                        </div>  
+                    
+                  
+                    
+                    
+                    
+                        
+                  </div>  
+                      </div>  
+                        
+                    <div class="col-md-6">  
+                      <div class="form-group">
+                        <label>{{'File Name' | translate }}</label>
+                        <input type="text" placeholder="{{'file name' | translate }}" class="form-control" ng-Required="true" ng-model="file_name">
+                      </div>
+                      <button ng-click="check(file_name)">Submit</button> 
+              <h1>Slave</h1>
+<!--              
+              method : GET
+end_point : send_to_file
+parameter : file_name, machine_id
+Above API is used in master
+method : GET
+end_point : receive_file
+parameter : file_name, machine_id
+Above API is used in Slave -->
+
+                      <div class="table_wrapper viewtwotable">
+                            <table class="table">
+                             <tr>
+                              <th>Name</th>
+                              <!-- <th>Date Modified</th>
+                              <th>Type</th>
+                              <th>File Size</th> -->
+                              <th>Actions</th>
+
+                              </tr>
+                                <tr ng-repeat="slave in slaveList | orderBy:'name'">
+                                 <td>{{slave}}</td>
+                                 <!-- <td>{{slave['attributes']['attributes'].mtime*1000 | date : format : 'M/d/y H:m:s'}}</td>
+                                 <td>{{'File'}} </td>
+                                 <td>{{slave['attributes']['attributes'].size}}</td> -->
+                                 <td>
+                                  <div class="role-setup" ng-hide="slave.name=='.' || slave.name=='..'">
+                                      <div  class="Download" ng-click="download(slave,'Slave')" data-toggle="modal" data-target="#machine" ><i class="fa fa-download" aria-hidden="true"></i></div>
+
+                                      <!-- <div  class="Backup" ng-click="backup(machine)" data-toggle="modal" data-target="#machine" ><i class="fa fa-external-link" aria-hidden="true"></i></div> -->
+                                      
+                                     
+                                      <div  class="delete" data-toggle="modal" data-target="#modal-1" ng-click="deleteDialog(slave,'Slave')" ><i class="fa fa-trash-o" aria-hidden="true" data-toggle="modal"  data-target="#modal-1"></i></div>        
+                                  </div>
+                              </td>  
+                                </tr>
+                            </table>  
+                            <div ng-if="length1 ==0">
+
+                                No Results Found
+      
+                              </div>     
+      
+                            
+                      </div>  
+                    
+              
+
+      </div>  
+                    
+          </div>
+          
+         
+      </div>
+    </section>
+           
+                 
+
+  <div ng-include="'footer.html'"></div>   
+
+   
+   <!-- modal -->
+   <div class="modal fade" id="modalUpload" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">File upload</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body machine-registration">
+                  <form name="cnc" >
+                        <div class="row">
+                            <label class="col-md-4 contro-label">Machine Name</label>
+                            <div class="col-md-8">
+                              <select name="account" class="form-control" ng-options="mc.id as mc.machine_name for mc in allmachines"
+                                  ng-model="MachineID;"  ng-Required="true">
+                                  <option value="">{{'selectmachine' | translate }}</option>
+                              </select>
+                            </div>
+                        </div>
+                          
+                        
+                         <div class="row mb-2">
+                          <label class="col-md-4 control-label">User Name</label>
+                          <div class="col-md-8">
+                            <input class="base" type="text" ng-model="user_name" placeholder="Enter the UserName" name="user" required />
+                        </div>
+                        </div>
+
+
+                        <div class="row mb-2">
+                          <label class="col-md-4 control-label">Revision Number</label>
+                          <div class="col-md-8">
+                            <input class="base" type="number" ng-model="revision_no" placeholder="Enter the Revision Number" name="revision" required />
+                        </div>
+                        </div>
+
+       
+
+                        <div class="row">
+                          <label class="col-md-4 control-label" for="file">File</label>
+                          <div class="col-md-8">
+
+                              <input type="file" ng-model="myFile" file-model="myFile" name="file" required />
+                          </div>
+                      </div>
+
+                        
+                       
+                <div class="row">
+                  <label class="col-md-4 contro-label">Date</label>
+
+              <div class="col-md-10">
+                
+
+              <div class="form-group" moment-picker="date"  format="DD-MM-YYYY" min-date="momentToday2" max-date="momentToday">
+
+
+                    <div class="input-group"><span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                      <input type="text" class="form-control" readonly ng-Required="true"  ng-model="date"  >
+                  </div>
+              </div>
+          </div>
+        </div>
+          
+
+
+                       
+
+                  </form>
+
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-modal-action="close" ng-disabled="cnc.$invalid " ng-click="uploadFile()" data-dismiss="modal" >Save</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  
+  <div class="modal fade" id="modal-1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Are you sure want to delete this file?</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body machine-registration">
+                
+                        <div class="row">
+                            <label class="col-md-4 contro-label">UserName</label>
+                            <div class="col-md-10">
+                             <input type="text" class="base" ng-model="name" placeholder="Enter the UserName" name="name" required />
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                          <label class="col-md-4 contro-label">Reason</label>
+                          <div class="col-md-10">
+                           <input type="text" class="base" ng-model="reason" placeholder="Enter the Reason" name="reason" required />
+                          </div>
+                      </div>
+
+                      <!-- <div class="row"  format="DD-MM-YYYY"  >
+                        <label class="col-md-4 contro-label">Date</label>
+                        <div class="col-md-10" moment-picker="from_date" format="DD-MM-YYYY" min-date="momentToday2" max-date="momentToday">
+                         <input type="datetime" class="base" ng-model="date" placeholder="Enter the Date" name="date"  required/>
+                        </div>
+                    </div>
+-->
+                <div class="row">
+                        <label class="col-md-4 contro-label">Date</label>
+
+                    <div class="col-md-10">
+                      
+
+                    <div class="form-group" moment-picker="date"  format="DD-MM-YYYY" min-date="momentToday2" max-date="momentToday">
+
+
+                          <div class="input-group"><span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" readonly ng-Required="true"  ng-model="date"  >
+                        </div>
+                    </div>
+                </div>
+              </div>
+                
+
+                    
+                        
+                         <!-- <div class="row">
+                            <div class="col"> 
+                              <div class="select">
+                                  <input type="file" file-model="myFile" name="file" class="form-control" required/>        
+                              </div>
+                            </div>   
+                        </div>  -->
+                       <!--  <div class="row">
+                            <label class="col-md-4 control-label" for="file">File</label>
+                            <div class="col-md-8">
+                                <input type="file" ng-model="myFile" file-model="myFile" name="file" required />
+                            </div>
+                        </div>
+                        <div class="row">
+                          <label class="col-md-4 control-label">Reason</label>
+                          <div class="col-md-8">
+                            <input type="text" ng-model="myReason"  name="reason" required />
+                        </div>
+                        </div> -->
+<!--                           
+                        <div class="row">
+                          <label class="col-md-4 control-label">Reason</label>
+                          <div class="col-md-8">
+                            <input type="text" ng-model="myReason"  name="reason" required />
+                        </div>
+                        </div> -->
+                  
+
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal"   ng ng-click="delete()" ng-disabled="!reason" >Delete</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  
+</div><!-- /.modal -->
+
+</div>
+</form>
+
+
+

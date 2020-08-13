@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+<html>
+  <body>
+    <div class="page login-page" ng-cloak="true">
+     <!-- <div class="alert alert-success alert-dismissable" ng-show="logInfo == 1">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Thanks For Registering with us !</strong>  We will get in touch with you shortly via Email.  
+     </div> -->
+      <div class="container">
+        <div class="form-outer d-flex align-items-center">
+          <div class="form-inner">
+              <h3>WIFI Configuration</h3>
+            <!-- <div class="logo text-center"><img src="assets/images/logo.jpg"></div> -->
+            <!-- <p class="text-center">{{'signintocontinue' | translate}}</p> -->
+            <form name="forgot_form" method="post" id="log-menu">
+              <div class="form-group row" class="column">
+                <label for="login-username" class="label-custom">{{'Network Name' | translate}}</label>
+                <input id="login-username" type="text" name="loginUsername" ng-model="forgot_form.user_name"  autocomplete="off" >
+                <span class="error" ng-show="forgot_form.input.$error.required">
+                  {{'required' | translate }}!</span>
+              </div>
+              <div class="column" >
+              <button class="btn btn-primary btn-small" ng-click="sinin()"><a id="login" >{{'Scan' | translate}}</a></button>
+            </div>
+
+<h4>Wifi Name List:{{lotch.data.wifi_name_list}}</h4>
+<!--
+              <div class="form-group">
+                <label for="login-security" class="label-custom">{{'Security' | translate}}</label>
+                <input id="login-security" type="text" name="loginSecurity" ng-model="login.security"  autocomplete="off" >
+              </div> -->
+              <div class="form-group row password_field">
+              <span>
+              <i class="fa fa-eye-slash" aria-hidden="true" ng-click="hideShowPassword()"></i>
+              </span>
+                <label for="login-password" class="label-custom">{{'password' | translate}} </label>
+                  <input id="login-password" type="{{inputType}}" name="loginPassword" ng-model="forgot_form.password" ng-Required="true" autocomplete="off">
+              <span style="color:Red" ng-show="forgot_form.input.$error.required"> {{'required' | translate }}! </span>
+              </div>
+              <button class="btn btn-primary btn-block btn-small" ng-disabled="forgot_form.$invalid || !forgot_form.password || !forgot_form.user_name" ng-click="signin()"><a id="login" >{{'Connect' | translate}}</a></button>
+              
+
+              <!--div ng-click="signin()"><a id="login" class="btn btn-primary btn-block">Login</a></div-->
+              <!-- This should be submit button but I replaced it with <a> for demo purposes-->
+            <!-- </form><a href="#" data-toggle="modal" data-target="#forgot" class="forgot-pass text-center" ng-click="clearForgot()">{{'forgotpassword' | translate}}?</a>
+            <div class="login_footer">
+            <small>{{'haveaccount' | translate}}?</small><a href="/#!/registration" class="signup">{{'signup' | translate}}</a>
+             -->
+            <!--section class="margin-bottom-20">
+              <select class="form-control" ng-change="changeLanguage(selectedLanguage)" ng-model="selectedLanguage">
+                <option value="en">English</option>
+                <option value="ta">தமிழ்</option>
+                <option value="hi">हिंदी</option>
+                <option value="ka">Kannada</option>
+              </select>
+            </section-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="popup1" class="overlay">
+    <div class="popup" >
+     
+    <h2>Wait untill system reboot</h2>
+    <a class="close" href="#">&times;</a>
+    <div >
+     {{retryMessage}}sec
+    </div>
+  </div>
+  </div>
+   
+    <!-- <div class="modal fade" id="forgot" tabindex="-1" role="dialog" aria-labelledby="forgot" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="forgot">{{'forgotpassword' | translate }}</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body machine-registration">
+                  <form name="forgot_form">
+                      <div class="form-group">
+                          <label>{{'emailid' | translate }}</label>
+                          <input type="email" name="input" placeholder="Email" class="form-control" ng-Required="true" ng-model="forgot.email_id">
+                          <span class="error" ng-show="forgot_form.input.$error.required">
+                            {{'required' | translate }}!</span>
+                          <span class="error" ng-show="forgot_form.input.$error.email">
+                            {{'notvalidemailid' | translate }}!</span>
+                      </div>
+                      <div class="row">
+                          <div class="col-md-12">
+                              <div class="form-group">
+                                  <label>{{'mobilenumber' | translate }} (eg:9876543210)</label>
+                                  <input type="number" placeholder="Phone Number" name="number" ng-maxlength="10" ng-minlength="10" ng-pattern="/^(?:\d{10}|\w+@\w+\.\w{2,3})$/" class="form-control" ng-Required="true" ng-model="forgot.phone_number" >
+                                  <span style="color:Red" ng-show="forgot_form.number.$error.required"> {{'required' | translate }}! </span>
+
+                                  <span style="color:Red" ng-show="forgot_form.number.$dirty&&forgot_form.number.$error.pattern">{{'onlynumbersallowedmaximum10numbers' | translate }}</span>
+                                </div>
+                          </div>
+                       
+                      </div>
+                     
+ 
+                  </form>
+ 
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" ng-disabled="forgot_form.$invalid" ng-click="forgotSubmit()">{{'send' | translate }}</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">{{'close' | translate }}</button>
+              </div>
+          </div>
+      </div>
+  </div> -->
+
+
+    <script src="assets/js/front.js"></script>
+
+  </body>
+</html>
+<style>
+  .error{
+     color:red;
+  }
+
+
+
+  .overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+
+  .appear {
+  position: fixed;
+  top: 50;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: visible;
+  opacity: 1;
+}
+
+ 
+  .popup {
+  text-align: center;
+  margin: 300px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  width: 30%;
+  position: relative;
+  transition: all 5s ease-in-out;
+}
+
+.popup h2 {
+  margin-top: 0;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+}
+.popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+.popup .close:hover {
+  color: #06D85F;
+}
+.popup .content {
+  max-height: 30%;
+  overflow: auto;
+}
+
+@media screen and (max-width: 700px){
+  .box{
+    width: 70%;
+  }
+  .popup{
+    width: 70%;
+  }
+}
+
+
+
+
+
+/* Custom style */
+.form-inner{
+  padding: 30px;
+  border-radius: 10px;
+}
+.password_field
+{
+position: relative;
+
+}
+.password_field span{
+    position: absolute;
+    top: 24px;
+    right: 15px;
+}
+</style>

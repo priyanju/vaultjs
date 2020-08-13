@@ -1,0 +1,196 @@
+<style>
+.table_wrapper .role-setup {
+justify-content: left;
+
+}
+</style>
+
+
+
+
+
+<div ng-include="'header.html'"></div>
+<div ng-include="'sidebar.html'"></div>
+<div class="page home-page">    
+    <section class="statistics section-padding section-no-padding-bottom section_top" ng-init="machineinit()">
+        <div class="container-fluid">
+            
+            <header>
+                <div ng-show="myLoader" class="spinner">
+                    <img src="assets/images/spinner.gif" class="myspin">
+                </div>
+                <h1 class="h3 display machinereg"><i class="fa fa-desktop" aria-hidden="true"></i> {{'File Path Registration' | translate }} <a ng-hide="role_Setup == 'operator' || role_Setup == 'supervisor'" class="btn_add" ng-click="cleandata()" data-toggle="modal" data-target="#machine"><i ng-hide="email == 'demo@gmail.com'" class="fa fa-plus" aria-hidden="true"></i></a></h1>
+            </header>
+            <div class="table_wrapper">
+            <table class="table">
+                <thead>
+                    <th>#</th>
+                    <th>Machine Name</th>
+                    <!-- <th>Controller</th> -->
+                    <th>Master Path</th>
+                    <th>Slave Path</th>
+                    <th>Actions</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="machine in machines">
+                        <td>{{$index+1}}</td>
+                        <td>
+                            {{ machine.machine.machine_name}}
+                            {{ machine.machine_type }}
+                        </td>
+                        <!-- <td>{{ machine.machine.machine_model}}</td> -->
+                        <td>{{machine.master_location}}</td>
+                        <td>{{ machine.slave_location }}</td>  
+                        <td>
+                            <div class="role-setup" ng-hide="role_Setup == 'operator' || role_Setup == 'supervisor'">
+                                <div ng-hide="email == 'demo@gmail.com'"  class="edit" ng-click="edit(machine)" data-toggle="modal" data-target="#machine" ng-disabled="machine.$invalid"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></div>
+                                <!-- <div ng-hide="email == 'demo@gmail.com'"  class="edit" ng-click="axisfun(machine.id)" data-toggle="modal" data-target="#machine1"><i class="fa fa-cog" aria-hidden="true"></i></div> -->
+                                <div ng-hide="email == 'demo@gmail.com'"  class="delete" confirmed-click="delete(machine.id)"  ng-confirm-click="Do you want to delete"><i class="fa fa-trash-o" aria-hidden="true"></i></div>        
+                            </div>
+                        </td>  
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+                <!-- <div >
+                    <div>
+                        Monthly Usage
+                        <div >
+                            <div >
+                                <div >
+                                    <div>
+                                     
+                                    <div class="count"></div>
+                                    </div>
+                                    
+                                    <div class="full-date">
+                                       <p></p>
+                                       <p></p>
+                                       <p></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            --> 
+
+        </div>
+
+    </section>
+
+
+    <!-- modal -->
+            <div class="modal fade" id="machine" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel" ng-model="form">{{'File Path Registration' | translate }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body machine-registration">
+                        <form name="machine" novalidate>
+                            <div class="form-group">
+                                <label>{{'ip' | translate }}</label>
+                                <input placeholder="{{'ip' | translate }}" placeholder="Please Enter Number" name="ip" class="form-control" required="" ng-model="ip" >
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>{{'username' | translate }}</label>
+                                        <input type="text" placeholder="{{'username' | translate }}" name="user_name" class="form-control" required="" ng-model="user_name" >
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>{{'password' | translate}}</label>
+                                    <input type="password" placeholder="{{'password'| translate }}" name="password" class="form-control" required="" ng-model="pass" >
+                                </div>
+                                </div>
+                            </div>
+                                <div class="form-group">
+                                <label>{{'FileLocation' | translate }}</label>
+                                <input type="text" placeholder="{{'/home/part_program' | translate }}" name="master" class="form-control" ng-readonly="true" ng-model="master_location">
+                            </div>
+                            <!-- <div class="form-group">
+                                <label>{{'slavelocation' | translate }}</label>
+                                <input type="text" placeholder="{{'slavelocation' | translate }}" name="slave" class="form-control" required="" ng-model="slave_location">
+                            </div> -->
+                            <div class="select">
+                            <label>{{'machine_name' | translate }}</label>
+                                <select name="account" class="form-control"  placeholder="{{'machine_name' | translate }}" ng-options="mc.id as mc.machine_name for mc in allmachines"
+                                    ng-model="MachineID" required="">
+                                    <option value="">{{'machine_name' | translate }}</option>
+                                </select>
+                            </div>
+            <!-- 
+                            <div class="select">
+                            <label>{{slave_location}}</label>
+                            <input type="text" ng-model="slave_location">
+                            </div> -->
+
+                            
+
+                            <!-- <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>{{'unit' | translate }}</label>
+                                        
+                                        <select name="account" class="form-control" ng-model="machineregistration.unit" ng-Required="true">
+                                            <option value="">{{'selectunit' | translate }}</option>
+                                            <option value="Unit - 1">{{'unit1' | translate }}</option>
+                                            <option value="Unit - 2">{{'unit2' | translate }}</option>
+                                            <option value="Unit - 3">{{'unit3' | translate }}</option>
+                                            <option value="Unit - 4">{{'unit4' | translate }}</option>
+                                            <option value="Unit - 5">{{'unit5' | translate }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>{{'deviceip' | translate }} </label><span style="font-size: 14px;">&nbsp;(Eg:GTA-Y001-0001)</span>
+                                    <input type="text" placeholder="{{'deviceip' | translate }}" class="form-control" ng-Required="true" ng-pattern='/^([A-Z]{1,5})[-]([A-Z]{1})([0-9]{3})[-]([0-9]{4})$/' ng-model="machineregistration.device_id">
+                                </div> -->
+                                <!-- || master_location || !pass || !user_name || !ip -->
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" ng-disabled="!MachineID ||   !pass || !user_name || !ip" ng-click="newmachine()" data-dismiss="machine">{{'save' | translate }}</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{'close' | translate }}</button>
+                                </div>
+                            </div>
+                        </form>
+                        
+                    </div>
+                    
+            </div>
+        </div>
+        </div>
+    <div class="modal fade" id="machine1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1">Axis Values</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body machine-registration">
+                <form name="machine" class="d-flex justify-content-between">
+                <div ng-repeat="values in machinesaxis">
+                    {{values.setting_name}}
+            <div>
+                <label class="switch">
+                <input type="checkbox" ng-model="values.is_active" ng-true-value="true" ng-false-value="false" ng-change="setStatus(values.is_active,values.id)">
+                <span class="slider round"></span>
+            </label>
+            </div>
+            </div>
+    </form>
+    </div> 
+    </div>
+    </div>
+    </div>
+    <div ng-include="'footer.html'"></div>
+</div>

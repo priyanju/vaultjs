@@ -1,0 +1,163 @@
+<!-- <style>
+    
+
+
+    /* .split { */
+    /* height: 100%;
+    width: 40%;
+    position: fixed;  */
+     /* z-index: 1; 
+     overflow-x: hidden;
+    padding-top: 20px;  */
+  /* }  */
+  
+  /* Control the left side */
+  /* .left { */
+    /* left: 0; */
+     
+  /* }  */
+  
+/*Control the right side */
+   .right {
+    /* right: 0; */
+    background-color:lightslategrey;
+    color:white;
+  } 
+
+  div.container.upload {
+    top:10px;
+  }
+
+  div.col-md-12 {
+    padding: 0;
+  }
+
+  .col-md-2.contro-label {
+    padding: 10px;
+    font-size: 16px;
+  }
+
+  .col-md-4.contro-label {
+    padding: 8px 15px 0px 15px;
+    font-size: 16px;
+  }
+
+  label.col-md-4.control-label { 
+    font-size: 16px;
+  }
+
+  table {
+   width: 100%;
+  }
+
+  th {
+    text-align: left;
+    padding: 5px;
+  }
+  td {
+    padding: 10px;
+  }
+  .modal-body{
+    padding: 25px;
+  }
+  
+</style> -->
+<style>
+input.base {
+    border: 1px solid #d2d2d2;
+    background-color: #ffffff;
+    color: #2d2d2d;
+    padding: 8px 11px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+</style>
+
+<div ng-include="'header.html'"></div>
+<div ng-include="'sidebar.html'"></div>
+ <div class="page home-page">
+   
+   <section class="viewtwo section-padding section-no-padding-bottom section_top" ng-init="machineinit()">
+       <div ng-show="myLoader" class="spinner">
+        <img src="assets/images/spinner.gif"> <!-- https://media1.tenor.com/images/a3bf29a2520198ddcbef0958f3761e14/tenor.gif?itemid=11391686.gif -->
+       </div>
+        <div class="container-fluid upload">
+            <header>
+                <div ng-show="myLoader" class="spinner">
+                    <img src="assets/images/spinner.gif" class="myspin">
+                </div>
+              
+                <div class="modal-body machine-registration">
+                  <form name="cnc" novalidate>
+                        <div class="row align-items-center">
+                            <h4 class="col-md-4 p-0">Machine Name</h4>
+                           
+                            <div class="col-md-4">
+                              <select name="account" class="form-control" ng-options="mc.id as mc.machine_name for mc in allmachines"
+                                  ng-model="MachineID;"  ng-Required="true" ng-change="machineChange(MachineID)">
+                                  <option value="">{{'selectmachine' | translate }}</option>
+                              </select>
+                            </div>
+
+                            <div class="col-md-4 text-center ">
+                                <input class="base" ng-model = "query" placeholder="Search" >
+                                <span ng-if="(reason | filter:query)?.length==0">No Results Found<h2 style="margin-left: 26px"></h2></span></div>
+                        </div>
+                        
+
+                        
+          <div class="row">
+              <h1>Reason</h1>
+                     
+                        <div class="table_wrapper viewtwotable"> 
+                         <table class="table">
+                           <tr>
+                           <th>#</th> 
+                             <th>User Name</th>
+                             <th>Machine Name</th>
+                             <th>Description</th>
+                             <th>Old Revision Number</th>
+                             <th>New Revision Number</th>
+                             <th>File Name</th>
+
+
+                            </tr>
+                            <tr ng-repeat="master in reason | orderBy:'name' | filter:query">
+                                <td>{{$index+1}}</td> 
+                                <td>{{master.user_name}}</td>
+                                <td>{{master.machine_name}}</td>
+                                <td>{{master.description}}</td>
+                                <td>{{master.old_revision_no}}</td>
+                                <td>{{master.new_revision_no}}</td>
+                                <td>{{master.file_name}}</td>
+
+
+                                
+                               </tr>
+                           </table>   
+                             
+                      
+                      
+                    
+                      
+                      
+                      
+                          
+                    </div>  
+                    <!-- <div ng-if="length2 ==0">
+                      No Results Found
+                     </div> -->
+                        </div>  
+                          
+                       
+                      
+            </div><br>
+
+
+                        
+
+</div>
+
+
+                <div ng-include="'footer.html'"></div>  

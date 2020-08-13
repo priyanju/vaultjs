@@ -1,0 +1,225 @@
+<style>
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+    
+    .switch input { 
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+    
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+    
+    input:checked + .slider {
+      background-color: #2196F3;
+    }
+    
+    input:focus + .slider {
+      box-shadow: 0 0 1px #2196F3;
+    }
+    
+    input:checked + .slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+    
+    /* Rounded sliders */
+    .slider.round {
+      border-radius: 34px;
+    }
+    
+    .slider.round:before {
+      border-radius: 50%;
+    }
+    </style>
+    <div ng-include="'header.html'"></div>
+    <div ng-include="'sidebar.html'"></div>
+    <div class="page home-page">     
+    
+    <section class="statistics section-padding section-no-padding-bottom section_top" ng-init="machineinit()">
+             <div class="container-fluid">
+                 <header>
+    
+                 <div ng-show="myLoader" class="spinner">
+                     <img src="assets/images/spinner.gif" class="myspin">
+                 </div>
+                     <h1 class="h3 display machinereg"><i class="fa fa-desktop" aria-hidden="true"></i> {{'machineregistration' | translate }} <a ng-hide="role_Setup == 'operator' || role_Setup == 'supervisor'" class="btn_add" ng-click="cleandata()" data-toggle="modal" data-target="#machine"><i ng-hide="email == 'demo@gmail.com'" class="fa fa-plus" aria-hidden="true"></i></a></h1>
+                 </header>
+    
+                 <div class="row d-flex align-items-stretch">
+                     <div class="col-lg-2" ng-repeat="machine in machines">
+                         <div class="card  machine_register_wrapper">
+                             <!-- Monthly Usage-->
+                             <div class="feed">
+                                 <div class="feed-body machine_register">
+                                     <div class="content">
+                                         <div class="machine_edits">
+                                          <div ng-hide="role_Setup == 'operator' || role_Setup == 'supervisor'">
+                                             <div ng-hide="email == 'demo@gmail.com'"  class="edit" ng-click="edit(machine.id,machine.controller_type)" data-toggle="modal" data-target="#machine"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></div>
+                                             <!-- <div ng-hide="email == 'demo@gmail.com'"  class="edit" ng-click="axisfun(machine.id)" data-toggle="modal" data-target="#machine1"><i class="fa fa-cog" aria-hidden="true"></i></div> -->
+                                             <div ng-hide="email == 'demo@gmail.com'"  class="delete" confirmed-click="delete(machine.id)"  ng-confirm-click="Do you want to delete"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
+                                          </div>
+                                             <div class="count">{{$index+1}}</div>
+                                         </div>
+                                         <h2>{{ machine.machine_name}}</h2>
+                                         <h4>{{ machine.machine_type }}</h4>
+                                         <div class="full-date">
+                                            <p><span>{{'controller' | translate }} :</span>{{ machine.machine_model}}</p>
+                                            <p><span>{{'model' | translate }} :</span>{{machine.machine_serial_no}}</p>
+                                            <p><span>{{'ip' | translate }} :</span>{{ machine.machine_ip }}</p>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+    
+             </div>
+    
+         </section>
+    
+    
+         <!-- modal -->
+     <div class="modal fade" id="machine" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+             <div class="modal-content">
+                 <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{'machineregistration' | translate }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                         <span aria-hidden="true">&times;</span>
+                     </button>
+                 </div>
+                 <div class="modal-body machine-registration">
+                     <form name="machine" >
+                         <div class="form-group">
+                            <label>{{'machinename' | translate }}</label>
+                            <input type="text" placeholder="{{'machinename' | translate }}" class="form-control"  ng-Required="true" ng-model="machineregistration.machine_type">
+                        </div>
+                         <div class="row">
+                             <div class="col-md-6">
+                                 <div class="form-group">
+                                    <label>{{'machinetype' | translate }}</label>
+                                    <input type="text" placeholder="{{'machinetype' | translate }}" class="form-control"  ng-Required="true" ng-model="machineregistration.machine_name" >
+                                </div>
+                             </div>
+                             <div class="col-md-6">
+                             <div class="form-group">
+                                <label>{{'controllermodelnumber' | translate}}</label>
+                                <input type="text" placeholder="{{'model'| translate }}" class="form-control"  ng-Required="true" ng-model="machineregistration.machine_model" >
+                            </div>
+                             </div>
+                         </div>
+                          <div class="form-group">
+                            <label>{{'machineserialnumber' | translate }}</label>
+                            <input type="text" placeholder="{{'serialnumber' | translate }}" class="form-control"  ng-Required="true" ng-model="machineregistration.machine_serial_no">
+                        </div>
+                         <div class="form-group">
+                            <label>{{'machine IP' | translate }}</label>
+                            <input type="text" placeholder="{{'machineip' | translate }}" class="form-control"  ng-Required="true"  ng-model="machineregistration.machine_ip" ng-pattern='/^([0-9]{1,3})[.]([0-9]{1,3})[.]([0-9]{1,3})[.]([0-9]{1,3})$/'>
+                        </div>
+                        <!-- ng-pattern='/^([0-9]{1,3})[.]([0-9]{1,3})[.]([0-9]{1,3})[.]([0-9]{1,3})$/' -->
+                         <div class="row">
+                             <div class="col-md-6">
+                                 <div class="form-group">
+                                    <label>{{'unit' | translate }}</label>
+                                   
+                                     <select name="account" class="form-control" ng-model="machineregistration.unit"  ng-Required="true">
+                                        <option value="">{{'selectunit' | translate }}</option>
+                                         <option value="Unit - 1">{{'unit1' | translate }}</option>
+                                         <option value="Unit - 2">{{'unit2' | translate }}</option>
+                                         <option value="Unit - 3">{{'unit3' | translate }}</option>
+                                         <option value="Unit - 4">{{'unit4' | translate }}</option>
+                                         <option value="Unit - 5">{{'unit5' | translate }}</option>
+                                     </select>
+                                 </div>
+                             </div>
+                             <div class="col-md-6">
+                             <div class="form-group">
+                                <label>{{'deviceip' | translate }} </label><span style="font-size: 14px;">&nbsp;(Eg:GTA-Y001-0001)</span>
+                                <input type="text" placeholder="{{'deviceip' | translate }}" class="form-control"  ng-Required="true"  ng-model="machineregistration.device_id" ng-pattern='/^([A-Z]{1,5})[-]([A-Z]{1})([0-9]{3})[-]([0-9]{4})$/'>
+                            </div>
+                            <!-- ng-pattern='/^([A-Z]{1,5})[-]([A-Z]{1})([0-9]{3})[-]([0-9]{4})$/' -->
+                             </div>
+                             <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>{{'machinetype' | translate }}</label>
+                                    <select name="account" class="form-control"  ng-Required="true" ng-model="machineregistration.controller_type">
+                                        <option value="">{{'select' | translate }} </option>
+                                        <option value="Ethernet">Ethernet</option>
+                                        <option value="RS232">RS232</option>
+                                        <!-- <option value="3">CT&PT</option> -->
+                                    </select>
+                                </div>
+                            </div> 
+                         </div>
+                     </form>
+                 </div>
+                 <div class="modal-footer">
+                    <button type="button" class="btn btn-primary"  ng-click="newmachine()" ng-disabled="machine.$invalid || !machineregistration.controller_type || !machineregistration.device_id || !machineregistration.unit || !machineregistration.machine_ip || !machineregistration.machine_model || !machineregistration.machine_name || !machineregistration.machine_type" data-dismiss="modal">{{'save' | translate }}</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{'close' | translate }}</button>
+                </div>
+             </div>
+         </div>
+     </div>
+    
+
+    
+     <div class="modal fade" id="machine1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                   <h5 class="modal-title" id="exampleModalLabel1">Axis Values</h5>
+                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body machine-registration">
+                    <form name="machine" class="d-flex justify-content-between">
+                     <div ng-repeat="values in machinesaxis">
+                       {{values.setting_name}}
+              <div>
+                   <label class="switch">
+                    <input type="checkbox" ng-model="values.is_active" ng-true-value="true" ng-false-value="false" ng-change="setStatus(values.is_active,values.id)">
+                   <span class="slider round"></span>
+                 </label>
+              </div>
+              </div>
+        </form>
+      </div> 
+         </div>
+        </div>
+    </div>
+
+    <div ng-include="'footer.html'"></div>
+    </div>
+    
+    
+    

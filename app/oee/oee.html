@@ -1,0 +1,510 @@
+<style type="text/css">
+
+    /* .th_op_name {
+        width: 10%;
+    }
+    .th_op_id {
+        width: 10%;
+    }
+    .th_mch_name {
+        width: 15%;
+    }
+    .th_mch_id {
+        width: 15%;
+    }
+    .th_shift {
+        width: 5%;
+    }
+    .th_shifttime {
+        width: 15%;
+    }
+    .th_job {
+        width: 15%;
+    }
+    .th_from {
+        width: 15%;
+    }
+  .th_created {
+        width: 15%;
+    }
+    .th_action {
+        width: 5%;
+    } */
+     
+  
+    .head-align tr th{
+      vertical-align: middle;
+      border-bottom: none;
+    }
+  
+    .card-collapse{
+      cursor: pointer;
+    }
+  
+    .card-collapse thead:hover{
+      background-color: #a2a2a2;
+      color: #fff;
+    }
+  
+    .card-collapse thead:hover tr th{
+      font-weight: bold;
+    }  
+  
+    .card-collapse thead a:hover i{
+      color: #444;
+    } 
+  
+    .card-collapse a:hover i{
+      color: #f59119;
+    }  
+  
+    .card-collapse.active{
+      -webkit-box-shadow: 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12), 0 3px 5px -1px rgba(0,0,0,0.3);
+      box-shadow: 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12), 0 3px 5px -1px rgba(0,0,0,0.3);
+      margin-bottom: 10px;
+      margin-top: 10px;
+    }
+  
+    .card-collapse thead{
+      color: #666;
+  /*    background-color: #dcdcdc;*/
+    }
+  
+    .card-collapse thead tr th{
+      font-weight: normal;
+    }
+  
+    .card-collapse.active thead tr th{
+      font-weight: bold;
+    }
+  
+    .card-collapse.active thead{
+      color: #fff;
+      background-color: #a2a2a2;
+    }
+  
+    .table-header thead tr th {
+      border-bottom: 2px solid #dedada;
+      font-size: 16px;
+    }
+    .active tr.firsttr{
+      background: #c3c3c3!important;
+      font-weight: bold;
+    }
+  
+  </style>
+  
+  <div ng-include="'sidebar.html'"></div>
+  <div ng-include="'header.html'"></div>
+  <div class="page home-page">
+   
+  
+    <div ng-show="myLoader" class="spinner">
+        <img src="assets/images/spinner.gif" class="myspin">
+      </div>
+    
+     
+      <section class="statistics section-padding section_top" ng-init="clientinit()">
+        <div class="container-fluid">
+         
+            <header>
+                <h1 class="h3 display "><i class="fa fa-laptop"></i>OEE 
+                  <a href="" class="btn_add" data-toggle="modal" data-target="#exampleModalLabel" ng-click="cleandata()"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                </h1>
+             
+                              <h1 class="h3 display table_h1">
+                                
+                              </h1>
+                        <div class="table_search" style="margin: 4px;">
+                          <input ng-model="q" time="search" class="form-control" ng-click="currentPage = 0" placeholder="{{'search' | translate }}">
+                      </div>
+    
+                    </header>
+    
+    
+    
+    
+          <div class="clearfix"></div>
+          <div class="card">
+             
+              <div class="card-block tablescroll">
+    
+          <div class="card card-collapse" ></div>
+            <table class="table table-striped head-align" style="margin-bottom: 0;">
+                <thead>
+                    <tr style="text-align: center;">
+                      <th>#</th>
+                      <th >Date</th>
+                      <th>Shift Id</th>
+                      <th>Machine</th>
+
+                    </tr>
+                  </thead>
+              <thead>
+                
+              </thead>
+                    <tr  ng-repeat-start="oee in oeevalue" style="text-align: center;" class="firsttr" ng-click="expanded = !expanded">
+                        <td>{{currentPage * pageSize + $index + 1}}</td>
+                        <td>{{ oee.date}}</td>
+                        <td>{{ oee.shift}}</td>
+                        <td>{{ oee.machine}}</td>
+                     </tr>
+                     <tr ng-show="expanded">
+                     <th>Program Number</th>
+                     <th>Run Rate</th>
+                     <th>Parts Count</th>
+                      <th>Time</th> 
+                     </tr>
+                       <tr ng-repeat-end ng-show="expanded" style="text-align: center;font-size: 20px;font-weight: bold;">
+                         
+                       
+                        <td ng-show="oee.oee_calculate_lists[0].program_number" >{{ oee.oee_calculate_lists[0].program_number }}</td>
+                        <td ng-show="oee.oee_calculate_lists[1].program_number">{{ oee.oee_calculate_lists[1].program_number }}</td>
+                        <td ng-show="oee.oee_calculate_lists[2].program_number">{{ oee.oee_calculate_lists[2].program_number }}</td>
+                        <td ng-show="oee.oee_calculate_lists[3].program_number">{{ oee.oee_calculate_lists[3].program_number }}</td>
+                        <td ng-show="oee.oee_calculate_lists[4].program_number">{{ oee.oee_calculate_lists[4].program_number }}</td>
+                        <td ng-show="oee.oee_calculate_lists[5].program_number">{{ oee.oee_calculate_lists[5].program_number }}</td>
+
+                        <td ng-show="oee.oee_calculate_lists[0].run_rate">{{ oee.oee_calculate_lists[0].run_rate	 }}</td>
+                        <td ng-show="oee.oee_calculate_lists[1].run_rate">{{ oee.oee_calculate_lists[1].run_rate	 }}</td>
+                        <td ng-show="oee.oee_calculate_lists[2].run_rate">{{ oee.oee_calculate_lists[2].run_rate	 }}</td>
+                        <td ng-show="oee.oee_calculate_lists[3].run_rate">{{ oee.oee_calculate_lists[3].run_rate	 }}</td>
+                        <td ng-show="oee.oee_calculate_lists[4].run_rate">{{ oee.oee_calculate_lists[4].run_rate	 }}</td>
+                        <td ng-show="oee.oee_calculate_lists[5].run_rate">{{ oee.oee_calculate_lists[5].run_rate	 }}</td>
+
+                        <td ng-show="oee.oee_calculate_lists[0].parts_count">{{ oee.oee_calculate_lists[0].parts_count}}</td>
+                        <td ng-show="oee.oee_calculate_lists[1].parts_count"">{{ oee.oee_calculate_lists[1].parts_count}}</td>
+                        <td ng-show="oee.oee_calculate_lists[2].parts_count">{{ oee.oee_calculate_lists[2].parts_count}}</td>
+                        <td ng-show="oee.oee_calculate_lists[3].parts_count">{{ oee.oee_calculate_lists[3].parts_count}}</td>
+                        <td ng-show="oee.oee_calculate_lists[4].parts_count">{{ oee.oee_calculate_lists[4].parts_count}}</td>
+                        <td ng-show="oee.oee_calculate_lists[5].parts_count">{{ oee.oee_calculate_lists[5].parts_count}}</td>
+
+                         <td ng-show="oee.oee_calculate_lists[0].time">{{ oee.oee_calculate_lists[0].time }}</td>
+                        <td ng-show="oee.oee_calculate_lists[1].time">{{ oee.oee_calculate_lists[1].time }}</td>
+                        <td ng-show="oee.oee_calculate_lists[2].time">{{ oee.oee_calculate_lists[2].time }}</td>
+                        <td ng-show="oee.oee_calculate_lists[3].time">{{ oee.oee_calculate_lists[3].time }}</td>
+                        <td ng-show="oee.oee_calculate_lists[4].time">{{ oee.oee_calculate_lists[4].time }}</td>
+                        <td ng-show="oee.oee_calculate_lists[5].time">{{ oee.oee_calculate_lists[5].time }}</td> 
+
+          
+         </tr>
+            </table>
+
+            <div>
+              <div class="pagination_left">{{'page' | translate }} {{currentPage+1}} {{'of' | translate }} {{numberOfPages()}}</div>
+              <div class="pagination_right">
+                  <ul class="pagination pagination">
+                      <li class="page-item">
+                          <button class="page-link" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">&laquo; </button>
+                      </li>
+                      <li class="page-item">
+                          <button class="page-link" ng-disabled="currentPage >= getData().length/pageSize - 1"
+                              ng-click="currentPage=currentPage+1">&raquo;</button>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+    
+          </div>
+          </div>
+          </div>
+      </section>
+    
+    
+    
+  
+  
+     
+      <div class="modal fade" id="exampleModalLabel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">{{'shiftregistration' | translate }}</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body machine-registration">
+                      <form name="operatorall">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label>Machine</label>
+                              <div class="select">
+                                <select name="machine" ng-disabled="alloedit == 1" class="form-control" ng-options="mc.id as mc.machine_name for mc in operatormachines" ng-model="operatorassignregistration.machine_id" class="btn btn-default select-width selectpicker form-control">
+                                  <option value="">Select Machine</option>
+                               <!-- <option ng-click="valuepass(sh.time)" ng-repeat="sh in shiftstransfordrop1" value="{{sh.time}}">{{sh.shift_no}} ({{sh.shift_start_time}}-{{sh.shift_end_time}})</option>  -->
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- <div class="row">
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                <label>Shift</label>
+                                <div class="select" ng-show="shiftvalueedit == null">
+                                  <select name="account" ng-change="valuepass(sh)" ng-disabled="alloedit == 1" class="form-control"  ng-model="operatorassignregistration.shifttransaction_id" class="btn btn-default select-width selectpicker form-control" >
+                                    <option  value="">Select Shift</option>
+                                    <option ng-repeat="sh in shiftstransfordrop1" value="{{sh.id}}">{{sh.shift_no}} ({{sh.shift_start_time}}-{{sh.shift_end_time}})</option>
+                                  </select>
+              
+                                </div>
+                                <div ng-show="shiftvalueedit != null">
+                                <input type="text" ng-readonly="alloedit == 1" class="form-control" ng-model="shiftvalueedit">
+                              </div>
+                              </div>
+                            </div>
+                          </div> -->
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                <label>Shift</label>
+                                <div class="select" >
+                                  <select name="shift" ng-disabled="alloedit == 1" class="form-control"  ng-model="operatorassignregistration.shifttransaction_id" class="btn btn-default select-width selectpicker form-control" ng-options="sh as sh.shift_no + ' (' + sh.shift_start_time + '-' + sh.shift_end_time+ ')' for sh in shiftstransfordrop1" ng-change="valuepass(operatorassignregistration.shifttransaction_id.id)">
+                                    <option  value="">Select Shift</option>
+                                  </select>
+                                </div>
+                                <div ng-show="shiftvalueedit != null">
+                                 <input type="text" ng-readonly="alloedit == 1" class="form-control" ng-model="shiftvalueedit">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        <div class="row">
+                        <div class="col-md-12">
+                          <label>Date</label>
+          
+                        <div class="form-group" moment-picker="from_date"  format="YYYY-MM-DD" min-date="momentToday2" max-date="momentToday">
+                              <div class="input-group"><span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                <input type="text" class="form-control" readonly ng-Required="true"  ng-model="from_date"  >
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+            
+                      
+          
+                        <div class="row">
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label>Duration</label>
+                              <div class="select">
+                            <input type="text" name="duration" class="form-control" ng-Required="true"  ng-model="calculatevalue.duration" placeholder="Target" readonly="true">
+                              </div>
+                            </div>
+                          </div>
+                        
+               
+                        
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label>Production Time</label>
+                              <div class="select">
+                            <input type="text" name="production_time" class="form-control" ng-Required="true"  ng-model="calculatevalue.prod_time" placeholder="Target" readonly="true">
+                              </div>
+                            </div>
+                          </div>
+                      
+          
+                      
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label>Balance</label>
+                              <div class="select">
+                            <input type="text" name="balance" class="form-control" ng-Required="true"  ng-model="calculatevalue.balance" placeholder="Target" readonly="true">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+            
+                     
+                       <div class="row" ng-repeat="choice in choices | orderBy:'$index':true track by $index">
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <label>Programe No</label>
+                             <div class="select">
+                                 <input type="text" name="time_async" ng-model="choice.programe_number" class="form-control" placeholder="Programe Number">
+                             </div>
+                          </div>  
+                        </div>
+                            <div class="col-md-3">
+                              <div class="form-group">
+                                <label>Idle Run Rate</label>
+                                 <div class="select">
+                                     <input type="text" name="time_async" ng-model="choice.idle_run_rate" class="form-control" placeholder="Run Rate">
+                                 </div>
+                              </div>  
+                            </div>
+                            <div class="col-md-3">
+                              <div class="form-group">
+                               <label>Count</label>
+                               <div cclass="select">
+                                <input type="text" name="parts_async" ng-model="choice.count" class="form-control" placeholder="Count">
+                               </div>
+                              </div>
+                            </div>
+                            <div class="col-md-3">
+                              <div class="form-group">
+                               <label>Time</label>
+                               <div cclass="select">
+                                <input type="text" name="parts_async" ng-model="choice.time" class="form-control" placeholder="Time">
+                               </div>
+                              </div>
+                            </div>
+          
+          
+                       </div>
+                        
+                       <button ng-click="addNewChoice()">Add Choice</button>
+          
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" ng-disabled="operatorall.$invalid" ng-click="sendallvalue()" data-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      </div> 
+            
+              </div>
+          </div>
+      </div>
+    <!-- modal -->
+    <!-- <div class="modal fade" time="exampleModalLabel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+       <div class="modal-content">
+           <div class="modal-header">
+            <h5 class="modal-title" time="exampleModalLabel">Operator Registration</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body machine-registration">
+            <form name="operatorall">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Machine</label>
+                    <div class="select">
+                      <select name="machine" ng-disabled="alloedit == 1" class="form-control" ng-options="mc.time as mc.machine_name for mc in operatormachines" ng-model="operatorassignregistration.machine_id" class="btn btn-default select-width selectpicker form-control">
+                        <option value="">Select Machine</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Shift</label>
+                    <div class="select" >
+                      <select name="shift" ng-disabled="alloedit == 1" class="form-control"  ng-model="operatorassignregistration.shifttransaction_id" class="btn btn-default select-width selectpicker form-control" ng-options="sh.time as sh.shift_no + ' (' + sh.shift_start_time + '-' + sh.shift_end_time+ ')' for sh in shiftstransfordrop1" ng-change="valuepass(operatorassignregistration.shifttransaction_id)">
+                        <option  value="">Select Shift</option>
+                      </select>
+                    </div>
+                    <div ng-show="shiftvalueedit != null">
+                     <input type="text" ng-readonly="alloedit == 1" class="form-control" ng-model="shiftvalueedit">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+              <div class="col-md-12">
+                <label>Date</label>
+
+              <div class="form-group" moment-picker="from_date"  format="YYYY-MM-DD" min-date="momentToday2" max-date="momentToday">
+                    <div class="input-group"><span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                      <input type="text" class="form-control" readonly ng-Required="true"  ng-model="from_date"  >
+                  </div>
+              </div>
+          </div>
+        </div>
+  
+            
+
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Duration</label>
+                    <div class="select">
+                  <input type="text" name="duration" class="form-control" ng-Required="true"  ng-model="calculatevalue.duration" placeholder="Target" readonly="true">
+                    </div>
+                  </div>
+                </div>
+              
+     
+              
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Production Time</label>
+                    <div class="select">
+                  <input type="text" name="production_time" class="form-control" ng-Required="true"  ng-model="calculatevalue.prod_time" placeholder="Target" readonly="true">
+                    </div>
+                  </div>
+                </div>
+            
+
+            
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Balance</label>
+                    <div class="select">
+                  <input type="text" name="balance" class="form-control" ng-Required="true"  ng-model="calculatevalue.balance" placeholder="Target" readonly="true">
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+           
+             <div class="row" ng-repeat="choice in choices | orderBy:'$index':true track by $index">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>Programe No</label>
+                   <div class="select">
+                       <input type="text" name="time_async" ng-model="choice.programe_number" class="form-control" placeholder="Programe Number">
+                   </div>
+                </div>  
+              </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label>Idle Run Rate</label>
+                       <div class="select">
+                           <input type="text" name="time_async" ng-model="choice.idle_run_rate" class="form-control" placeholder="Run Rate">
+                       </div>
+                    </div>  
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                     <label>Count</label>
+                     <div cclass="select">
+                      <input type="text" name="parts_async" ng-model="choice.count" class="form-control" placeholder="Count">
+                     </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                     <label>Time</label>
+                     <div cclass="select">
+                      <input type="text" name="parts_async" ng-model="choice.time" class="form-control" placeholder="Time">
+                     </div>
+                    </div>
+                  </div>
+
+
+             </div>
+              
+             <button ng-click="addNewChoice()">Add Choice</button>
+
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" ng-disabled="operatorall.$invalid" ng-click="sendallvalue()" data-dismiss="modal">Save</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div> 
+
+        </div>
+      </div>
+    </div>
+   -->
+    <div ng-include="'footer.html'"></div>
+    </div>
+  

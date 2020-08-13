@@ -1,0 +1,669 @@
+
+<html>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script--> 
+
+  <!-- <link rel="stylesheet" href="./bootstrap.min.css">
+  <script src="./jquery.min.js"></script>
+  <script src="./bootstrap.min.js"></script> -->
+  
+  <style>
+    .missing{
+        color:yellow;
+    }
+    .missmatch{
+        color:pink;
+    }
+    .bg-2 { 
+        background-color: #474e5d;
+        color: #ffffff;
+    }
+    .container-fluid {
+        /* padding-top: 70px; */
+        padding-bottom: 70px;
+    }
+    textarea.form-control {
+        height: 30%;
+       
+    }
+    .result{
+        border: 1px solid white;
+        padding: 10px 10px;
+        margin: 10px 10px;
+        border-radius: 5px;
+        min-height: 300px;
+        text-align: left;
+
+    }
+  /*  .textarea{
+     background: url(http://i.imgur.com/2cOaJ.png) !important;
+     background-attachment: local !important;
+     background-repeat: no-repeat !important;
+     padding-left: 35px !important;
+     padding-top: 10px !important;
+     border-color:#ccc !important;
+     
+   }*/
+  </style>
+  <body>
+
+    <!-- user interface begins -->
+  <div class="container-fluid bg-2 text-center">
+    <h3>Comparing Code</h3>
+    <div class="row">
+      <div class="col-sm-6">
+        <form name="mainForm">
+          <input type="file" id="fileToLoad" onchange="checkExt();" >
+        </form>
+      </div>
+      <div class="col-sm-6">
+        <form name="mainForm1">
+          <input type="file" id="fileToLoad1" onchange="checkExt1();" >
+        </form>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="comment">Code 1</label>
+            <textarea id="textareaBefore" readonly class="form-control textarea" rows="10" cols="500"></textarea>
+        </div>    
+      </div>
+          
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="comment">Code 2</label>
+            <textarea readonly id="textareaAfter" class="form-control textarea" rows="10" cols="500"></textarea>
+            <!-- <button onclick="editfilesave();" class="btn btn-default btn-lg">Save File</button> -->
+        </div>
+      </div>
+    </div>
+
+    <button id="buttonCompare" onclick="buttonCompareClicked();" class="btn btn-default btn-lg">Compare</button>
+           
+    <div>
+      <h3>Result</h3>
+      <div id="textareaDifferences" class="result textarea"></div>
+    </div>
+  </div>
+  
+  
+<!-- user interface ends -->
+   
+<script type="text/javascript">
+
+    function checkExt() {
+  //if(document.mainForm.fileToLoad.value.lastIndexOf(".txt")==-1) {
+   // alert("Please upload only .txt extention file");
+   // return false;
+ //}
+ var fileToLoad = document.getElementById("fileToLoad").files[0];
+ 
+ var fileReader = new FileReader();
+ fileReader.onload = function(fileLoadedEvent) 
+ {
+     
+     var textFromFileLoaded = fileLoadedEvent.target.result;
+     document.getElementById("textareaBefore").value = textFromFileLoaded;
+ };
+ fileReader.readAsText(fileToLoad, "UTF-8");
+}
+
+
+
+function checkExt1() {
+  //if(document.mainForm.fileToLoad.value.lastIndexOf(".txt")==-1) {
+   // alert("Please upload only .txt extention file");
+   // return false;
+ //}
+ var fileToLoad = document.getElementById("fileToLoad1").files[0];
+ 
+ var fileReader = new FileReader();
+ fileReader.onload = function(fileLoadedEvent) 
+ {
+     var textFromFileLoaded = fileLoadedEvent.target.result;
+     document.getElementById("textareaAfter").value = textFromFileLoaded;
+ };
+ fileReader.readAsText(fileToLoad, "UTF-8");
+}
+function editfilesave(){
+    var inputVal = document.getElementById("textareaAfter").value;
+const textToBLOB = new Blob([inputVal], { type: 'text/plain' });
+        const sFileName = 'formData.txt';	   // The file to save the data.
+        let newLink = document.createElement("a");
+        newLink.download = sFileName;
+        if (window.webkitURL != null) {
+            newLink.href = window.webkitURL.createObjectURL(textToBLOB);
+        }
+        else {
+            newLink.href = window.URL.createObjectURL(textToBLOB);
+            newLink.style.display = "none";
+            document.body.appendChild(newLink);
+        }
+        newLink.click(); 
+}
+
+
+
+
+  
+// events
+  
+function buttonCompareClicked()
+{      
+    var textBefore = document.getElementById("textareaBefore").value;
+    var textAfter = document.getElementById("textareaAfter").value;
+  
+    var differences = new TextDifferencer().findDifferencesBetweenStrings
+    (
+        textBefore,
+        textAfter
+    );
+  
+ 
+    var differencesAsString = differences.toString();
+   
+    var textareaDifferences = document.getElementById("textareaDifferences");
+    textareaDifferences.innerHTML = differencesAsString;
+    
+      
+}
+  
+// extensions
+  
+function ArrayExtensions()
+{
+    // extension class
+}
+{
+    Array.prototype.insertElementAt = function(element, index)
+    {
+        this.splice(index, 0, element);
+    }
+  
+    Array.prototype.insertElementsAt = function(elements, index)
+    {
+        for (var i = 0; i < elements.length; i++)
+        {
+            this.splice(index + i, 0, elements[i]);
+        }
+    }
+  
+    Array.prototype.removeAt = function(index)
+    {
+        this.splice(index, 1);
+    }
+}
+  
+// classes
+  
+function TextDifferencer()
+{
+    // do nothing
+}
+{
+    TextDifferencer.prototype.findDifferencesBetweenStrings = function(string0, string1)
+    {
+        var lengthOfShorterString = 
+            (string0.length <= string1.length ? string0.length : string1.length);
+ 
+        var numberOfExtremes = 2;   
+        var passagePairsMatchingAtExtremes = [];
+     
+        for (var e = 0; e < numberOfExtremes; e++)
+        {
+            var lengthOfMatchingSubstring = 0;
+     
+            for (var i = 0; i < lengthOfShorterString; i++)
+            {
+                var offsetForString0 = (e == 0 ? i : string0.length - i - 1); 
+                var offsetForString1 = (e == 0 ? i : string1.length - i - 1);
+ 
+                var charFromString0 = string0[offsetForString0];
+                var charFromString1 = string1[offsetForString1];
+     
+                if (charFromString0 != charFromString1)
+                {
+                    lengthOfMatchingSubstring = i;
+                    break;          
+                }   
+            }
+     
+            var matchingSubstringAtExtreme;
+ 
+            if (e == 0)
+            {
+                matchingSubstringAtExtreme = string0.substr(0, lengthOfMatchingSubstring);
+                string0 = string0.substr(lengthOfMatchingSubstring);
+                string1 = string1.substr(lengthOfMatchingSubstring);
+            } else // if (e == 1)
+            {
+                matchingSubstringAtExtreme = string0.substr(string0.length - lengthOfMatchingSubstring);
+                string0 = string0.substr(0, string0.length - lengthOfMatchingSubstring);
+                string1 = string1.substr(0, string1.length - lengthOfMatchingSubstring);                
+            }
+ 
+            var passagePairMatchingAtExtreme = new TextPassagePair
+            (
+                true, // doPassagesMatch
+                [
+                    new TextPassage(matchingSubstringAtExtreme),
+                    new TextPassage(matchingSubstringAtExtreme),
+                ]
+            );
+ 
+            passagePairsMatchingAtExtremes.push
+            (
+                passagePairMatchingAtExtreme
+            );
+        }
+ 
+        var passagePairsAll = [];
+  
+        var passagePairsMatching = this.findPassagePairsMatchingBetweenStrings
+        (
+            string0, string1, [ 0, 0 ]
+        );
+  
+        this.insertPassagePairsDifferentBetweenMatching
+        (
+            string0,
+            string1,
+            passagePairsMatching,
+            passagePairsAll
+        );
+ 
+        for (var e = 0; e < passagePairsMatchingAtExtremes.length; e++)
+        {
+            var passagePairMatchingAtExtreme = passagePairsMatchingAtExtremes[e];
+            passagePairsAll.insertElementAt
+            (
+                passagePairMatchingAtExtreme, 
+                (e == 0 ? 0 : passagePairsAll.length)
+            );
+        }
+          
+        var returnValue = new TextDifferences(passagePairsAll);
+  
+        return returnValue;
+    }
+  
+    TextDifferencer.prototype.findPassagePairsMatchingBetweenStrings = function
+    (
+        string0, string1, positionOffsets
+    )
+    {
+        var passagePairsMatching = [];
+  
+        var longestCommonPassagePair = this.findLongestCommonPassagePair
+        (
+            string0, 
+            string1
+        );
+  
+        var longestCommonPassageText = longestCommonPassagePair.passages[0].text;
+        var lengthOfCommonPassage = longestCommonPassageText.length;
+  
+        if (lengthOfCommonPassage == 0)
+        {
+            return passagePairsMatching;    
+        }
+  
+        passagePairsMatching.push(longestCommonPassagePair);
+  
+        var passages = longestCommonPassagePair.passages;
+        var passage0 = passages[0];
+        var passage1 = passages[1];
+  
+        var passagePairsMatchingBeforeCommon = this.findPassagePairsMatchingBetweenStrings
+        (
+            string0.substr(0, passage0.position),
+            string1.substr(0, passage1.position),
+            [
+                positionOffsets[0], 
+                positionOffsets[1]
+            ]
+        );
+  
+        var passagePairsMatchingAfterCommon = this.findPassagePairsMatchingBetweenStrings
+        (
+            string0.substr
+            (
+                passage0.position + lengthOfCommonPassage
+            ),
+            string1.substr
+            (
+                passage1.position + lengthOfCommonPassage
+            ),
+            [
+                positionOffsets[0] 
+                    + passage0.position 
+                    + lengthOfCommonPassage,
+  
+                positionOffsets[1] 
+                    + passage1.position 
+                    + lengthOfCommonPassage
+            ]
+        );
+  
+        var passagePairSetsMatchingBeforeAndAfter = 
+        [
+            passagePairsMatchingBeforeCommon,
+            passagePairsMatchingAfterCommon
+        ];
+  
+        for (var i = 0; i < passagePairSetsMatchingBeforeAndAfter.length; i++)
+        {
+            var passagePairsToInsert = passagePairSetsMatchingBeforeAndAfter[i];
+            passagePairsMatching.insertElementsAt
+            (          
+                passagePairsToInsert,
+                (i == 0 ? 0 : passagePairsMatching.length)
+            );
+        }
+  
+        for (var i = 0; i < longestCommonPassagePair.passages.length; i++)
+        {
+            var passage = longestCommonPassagePair.passages[i];
+            passage.position += positionOffsets[i];
+        }
+  
+        return passagePairsMatching;
+    }
+  
+    TextDifferencer.prototype.findLongestCommonPassagePair = function(string0, string1)
+    {
+        var passage0 = new TextPassage("", 0);
+        var passage1 = new TextPassage("", 0);
+  
+        var returnValue = new TextPassagePair
+        (
+            true, // doPassagesMatch
+            [
+                passage0, passage1
+            ]
+        );
+  
+        var lengthOfString0 = string0.length;
+        var lengthOfString1 = string1.length;
+  
+        var substringLengthsForRow = null;
+        var substringLengthsForRowPrev;
+  
+        var lengthOfLongestCommonSubstringSoFar = 0;
+        var longestCommonSubstringsSoFar = "";
+        var cellIndex = 0;
+  
+        // Build a table whose y-axis is chars from string0,
+        // and whose x-axis is chars from string1.
+        // Put length of the longest substring in each cell.
+  
+        for (var i = 0; i < lengthOfString0; i++)
+        {
+            substringLengthsForRowPrev = substringLengthsForRow;
+            substringLengthsForRow = [];
+  
+            for (var j = 0; j < lengthOfString1; j++)
+            {
+                if (string0[i] != string1[j])
+                {
+                    substringLengthsForRow[j] = 0;
+                }
+                else 
+                {
+                    var cellValue;
+  
+                    if (i == 0 || j == 0)
+                    {
+                        // first row or column
+                        cellValue = 1;
+                    }
+                    else
+                    {
+                        // Copy cell to upper left, add 1.
+                        cellValue = substringLengthsForRowPrev[j - 1] + 1;
+                    }
+  
+                    substringLengthsForRow[j] = cellValue;
+  
+                    if (cellValue > lengthOfLongestCommonSubstringSoFar)
+                    {
+                        lengthOfLongestCommonSubstringSoFar = cellValue;
+                        var startIndex = i - lengthOfLongestCommonSubstringSoFar + 1;
+                        var longestCommonSubstringSoFar = string0.substring // not "substr"!
+                        (
+                            startIndex, 
+                            i + 1
+                        );
+  
+                        passage0.text = longestCommonSubstringSoFar;
+                        passage0.position = startIndex;
+  
+                        passage1.text = longestCommonSubstringSoFar;
+                        passage1.position = j - lengthOfLongestCommonSubstringSoFar + 1;
+                    }
+                }
+            }
+        }
+  
+        return returnValue;
+    }
+  
+    TextDifferencer.prototype.insertPassagePairsDifferentBetweenMatching = function
+    (
+        string0,
+        string1,
+        passagePairsToInsertBetween,
+        passagePairsAll
+    )
+    {   
+        passagePairsToInsertBetween.insertElementAt
+        (
+            new TextPassagePair
+            (
+                true, // doPassagesMatch
+                [
+                    new TextPassage("", 0),
+                    new TextPassage("", 0)
+                ]
+            ),
+            0
+        );
+  
+        passagePairsToInsertBetween.push
+        (
+            new TextPassagePair
+            (
+                true, // doPassagesMatch
+                [
+                    new TextPassage("", string0.length),
+                    new TextPassage("", string1.length)
+                ]
+            )
+        );
+  
+        var pMax = passagePairsToInsertBetween.length - 1;
+  
+        for (var p = 0; p < pMax; p++)
+        {
+            passagePairToInsertAfter = passagePairsToInsertBetween[p];
+            passagePairToInsertBefore = passagePairsToInsertBetween[p + 1];
+  
+            this.buildAndInsertPassagePairBetweenExisting
+            (
+                string0,
+                string1,
+                passagePairToInsertBefore,
+                passagePairToInsertAfter,
+                passagePairsAll
+            );
+  
+            passagePairsAll.push(passagePairToInsertBefore);
+        }
+  
+        var indexOfPassagePairFinal = passagePairsAll.length - 1;
+  
+        var passagePairFinal = passagePairsAll[indexOfPassagePairFinal];
+  
+        if 
+        (
+            passagePairFinal.doPassagesMatch == true 
+            && passagePairFinal.passages[0].text.length == 0
+        )
+        {
+            passagePairsAll.removeAt(indexOfPassagePairFinal, 1);
+        }
+    }
+  
+    TextDifferencer.prototype.buildAndInsertPassagePairBetweenExisting = function
+    (
+        string0, 
+        string1, 
+        passagePairToInsertBefore, 
+        passagePairToInsertAfter,
+        passagePairsAll
+    )
+    {
+        var lengthOfPassageToInsertAfter = passagePairToInsertAfter.passages[0].text.length;
+  
+        var positionsForPassagePairDifferent = 
+        [
+            [
+                passagePairToInsertAfter.passages[0].position 
+                    + lengthOfPassageToInsertAfter,
+  
+                passagePairToInsertAfter.passages[1].position 
+                    + lengthOfPassageToInsertAfter
+            ],        
+            [
+                passagePairToInsertBefore.passages[0].position,
+                passagePairToInsertBefore.passages[1].position
+            ]          
+        ];
+  
+        var passageToInsert0 =  new TextPassage
+        (
+            string0.substring // not "substr"!
+            (
+                positionsForPassagePairDifferent[0][0], 
+                positionsForPassagePairDifferent[1][0]
+            ),
+            positionsForPassagePairDifferent[0][0]
+        );
+  
+        var passageToInsert1 = new TextPassage
+        (
+            string1.substring  // not "substr"!
+            (
+                positionsForPassagePairDifferent[0][1], 
+                positionsForPassagePairDifferent[1][1]
+            ),
+            positionsForPassagePairDifferent[0][1]
+        );
+  
+        var passagePairToInsert = new TextPassagePair
+        (
+            false, // doPassagesMatch
+            [
+                passageToInsert0,
+                passageToInsert1
+            ]
+        );
+  
+        if 
+        (
+            passagePairToInsert.passages[0].text.length > 0
+            || passagePairToInsert.passages[1].text.length > 0
+        )
+        {
+            passagePairsAll.push(passagePairToInsert);
+        }
+  
+    } 
+}
+ 
+function TextDifferences(passagePairs)
+{
+    this.passagePairs = passagePairs;
+}
+{
+    // instance methods
+  
+    TextDifferences.prototype.toString = function()
+    {
+        var returnValue = "";
+  
+        for (var p = 0; p < this.passagePairs.length; p++)
+        {
+            var passagePair = this.passagePairs[p];
+            var passagePairAsString = passagePair.toString();
+  
+            returnValue += passagePairAsString;
+        }
+  
+        return returnValue; 
+    }   
+ 
+}
+  
+function TextPassage(text, position)
+{
+    this.text = text;
+    this.position = position;
+}
+  
+function TextPassagePair(doPassagesMatch, passages)
+{
+    this.doPassagesMatch = doPassagesMatch;
+    this.passages = passages;   
+}
+{
+    TextPassagePair.prototype.toString = function()
+    {
+        var returnValue = "";
+  
+        if (this.doPassagesMatch == true)
+        {
+            returnValue = this.passages[0].text;
+            returnValue = this.escapeStringForHTML(returnValue);
+        }
+        else
+        {
+            returnValue += "<mark style='background-color:yellow'>";
+            returnValue += this.escapeStringForHTML(this.passages[0].text);
+            returnValue += "</mark><mark style='background-color:red'>";
+            returnValue += this.escapeStringForHTML(this.passages[1].text);
+            returnValue += "</mark>"; 
+  
+        }
+  
+        return returnValue;
+    }
+ 
+    TextPassagePair.prototype.escapeStringForHTML = function(stringToEscape)
+    {
+        var returnValue = stringToEscape.replace
+        (
+            "&", "&amp;"
+        ).replace
+        (
+            "<", "&lt;"
+        ).replace
+        (
+            ">", "&gt;"
+        ).replace
+        (
+           /(\r\n|\n|\r)/gm, "<br>"
+        );
+ 
+        return returnValue;
+    }
+}
+  
+</script>
+</body>
+</html>

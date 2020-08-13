@@ -1,0 +1,345 @@
+<style type="text/css">
+  .spinner {
+    background: #262932;
+    height: 100vh;
+    opacity: 0.9;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 76px;
+    left: 24%;
+    right: 0;
+    width: auto;
+    z-index: 999;
+  }
+  .spinner img{
+    width: 90px;
+    margin-top: -130px;
+  }
+</style>
+    <div ng-include="'header.html'"></div>
+    <div ng-include="'sidebar.html'"></div> 
+      <div class="page home-page">
+          <div ng-show="myLoader" class="spinner">
+              <img src="assets/images/spinner.gif"> 
+          </div>    
+                <div class="side_mec">  
+                                 
+                  <div class="mac_stat" ng-repeat="(i,val) in machine.data" ng-init="dashboard_init()"> 
+                  <h1>{{i}}</h1>                  
+                    <ul class="mac_list">
+                      <li><a>{{'all' | translate}} ({{val.length}})</a></li>
+                      <li><a>{{'running' | translate }} ({{machine.count[i].running -- 0}})</a></li>
+                      <li><a>{{'idle' | translate }} ({{(machine.count[i].idle1) -- (machine.count[i].idle) -- (machine.count[i]["2"])}})</a></li>
+                      <li><a>{{'stop' | translate }}({{machine.count[i].stop-- 0}})</a></li>
+                    </ul>
+                    <div class="clearfix"></div>                   
+                       <ul class="mac_disp" ng-repeat="v in val">                        
+
+                           <li ng-click="activeclick(v.machine_id)">
+                            <a ng-if="v.machine_status != '3' && v.machine_status !='100' && v.machine_status != null && v.machine_id != m_id">
+                              <img src="assets/images/machine_idle_nrm.png"><span>{{v.mac_name | splithtml:'/':1}}</span>
+                            </a>
+
+                             <a ng-if="v.machine_status != '3' && v.machine_status !='100' && v.machine_status != null && v.machine_id == m_id ">
+                              <img src="assets/images/machine_idle.png"><span>{{v.mac_name | splithtml:'/':1}}</span>
+                            </a>
+
+                            <a ng-if="v.machine_status =='3' && v.machine_id != m_id">
+                              <img src="assets/images/machine_running_nrm.png"><span>{{v.mac_name | splithtml:'/':1}}</span>
+                            </a>
+
+                            <a ng-if="v.machine_status =='3' && v.machine_id == m_id">
+                              <img src="assets/images/machine_running.png"><span>{{v.mac_name | splithtml:'/':1 }}</span>
+                            </a>
+
+                             <a ng-if="v.machine_status=='100' && v.machine_id != m_id">
+                              <img src="assets/images/machine_stop_nrm.png"><span>{{v.mac_name | splithtml:'/':1}}</span>
+                            </a>
+
+                             <a ng-if="v.machine_status=='100' && v.machine_id == m_id">
+                              <img src="assets/images/machine_stop.png"><span>{{v.mac_name | splithtml:'/':1}}</span>
+                           </a>
+                           
+
+                           <a ng-if="v.machine_status== null && v.machine_id != m_id">
+                            <img src="assets/images/machine_no_data_nrm.png"><span>{{v.mac_name | splithtml:'/':1}}</span>
+                          </a>
+
+                           <a ng-if="v.machine_status== null && v.machine_id == m_id">
+                            <img src="assets/images/machine_no_data_active.png"><span>{{v.mac_name | splithtml:'/':1 }}</span>
+                         </a>
+                          </li>
+                        </ul>
+                        <div class="clearfix"> </div>
+                  </div>          
+                  <div class="clearfix"> </div>
+                </div>
+
+                <div class="content-inner active content-dashboard">
+                  <div class="container-fluid">
+                   <div class="wrapper_inner">
+                    <div class="mec_head">
+                      <div class="row">                     
+                          <div class="col-sm-2 v_mid">
+                            <span  ng-class="{lt_running :datas.machine_status =='3' ,lt_stop :datas.machine_status=='100',lt_nodata: datas.machine_status == null,lt_idle : datas.machine_status != '3' && datas.machine_status !='100' && datas.machine_status != null}" style="font-size: 25px;"></span>
+                            <span ng-if="datas.machine_status =='3'" style="font-size: 25px;"> {{'running' | translate}}</span>
+                            <span ng-if="datas.machine_status !='3' && datas.machine_status !='100' && datas.machine_status != null " style="font-size: 25px;"> {{'idle' | translate}}</span>
+                            <span ng-if="datas.machine_status =='100'" style="font-size: 25px;"> {{'stop' | translate}}</span>
+                            <span ng-if="datas.machine_status =='null'" style="font-size: 25px;">{{'nodata' | translate}}</span>                            
+                          </div>
+                          <div class="col-sm-8 v_mid">
+                            <h1 ng-click="machine_page_redirect(datas.machine_id)" style="cursor: pointer;" >{{datas.machine_name}}<center style="font-size: 19px;/*! margin: 11; */margin-top: 6px;color: #f7941d;">Shift:{{datas.shift_no}}({{datas.shift_time}}) </center></h1>
+                          </div>
+                          <div class="col-sm-2 clock_all pl-0">
+                            <div class="clock_top"><span>{{'date' | translate}}:</span>{{ clock | date:'dd-MM-yyyy'}}</div>
+                            <div class="clock_lrg">{{ clock | date:'hh:mm:ss'}}<span>{{ clock | date:'a'}}</span></div>
+                          </div>
+                      </div>
+                    </div>  
+                      <div class="d-flex justify-content-between pb-3 mb-3" style="border-bottom: 1px solid #3e3939;">
+                        <label class="font-weight-bold" style="font-size: 16px;">Operator Name : <span class="font-weight-normal">{{datas.operator_allocation}}</span></label>
+                        <label class="font-weight-bold" style="font-size: 16px;">Last Updated Time: <span class="font-weight-normal">{{datas.last_update | date:'dd-MM-yyyy'}}&nbsp;/&nbsp;{{datas.last_update | date:'hh:mm a'}}</span></label> 
+                      </div>
+                    <div class="row">
+                      <div class="col-sm-4 text-center">
+                        <div class="gradient-wrapper">
+                          <percent-display percent="datas.utilization" side="200" colors="#27272e"  ng-class="{green :datas.machine_status =='3' ,red :datas.machine_status=='100',yellow : datas.machine_status != '3' && datas.machine_status !='100' && datas.machine_status != null}"></percent-display>
+                        </div>
+                        <div class="bg_grad">
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-sm-12">
+                               <h5>{{datas.job_name}}</h5>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div class="bg_grad">
+                         <div class="container">
+                          <div class="row">
+                            <div class="col-sm-6 brdr_right parts_pro">
+                             <h4>{{'partsproduced'| translate }}</h4>
+                             <ul class="parts_produced">
+                               <li>
+                                  <h4><label>MD :</label>{{datas.machine_disply}}<span>Nos</span></h4>
+                               </li>
+                               <li>
+                                  <h4><label>C &nbsp; &nbsp;:</label>{{datas.parts_count}}<span>Nos</span></h4>
+                               </li>
+                             </ul>
+                            </div>
+                            <div class="col-sm-6 brdr_left">
+                                <table class="table parts_pro_table">
+                                  <thead>
+                                    <tr>
+                                      <th>Pgm No</th>
+                                      <th>{{'parts' | translate }}</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody class="table-scroll" >
+                                    <tr ng-repeat="(key,val) in datas.job_wise_parts">
+                                      <td>{{key}}</td>
+                                      <td>{{val}}</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                         
+                   <div class="bg_grad">
+                    <div class="mac_ut_holder">
+                      <h5 style="margin-bottom:20px;"><i class="fa fa-clock-o" aria-hidden="true" style="margin-right: 10px;"></i>{{'currentstatus' | translate }}</h5>
+                       <div class="row m-0 ">
+                           <div class="col-sm-4 mac_ut brdr_right">
+                            <span class="mac_ut_bar_green"></span>
+                             <h5>{{'runtime' | translate }}</h5>
+                           <div class="mac_ut_time">{{datas.run_time}}</div>
+                         </div>
+                          <div class="col-sm-4 mac_ut brdr_mid">
+                            <span class="mac_ut_bar_yellow"></span>
+                             <h5>{{'idletime' | translate }}</h5>
+                            <div class="mac_ut_time">{{datas.idle_time}}</div>
+                          </div>
+                          <div class="col-sm-4 mac_ut brdr_left">
+                           <span class="mac_ut_bar_red"></span>
+                            <h5>{{'stoptime' | translate }}</h5>
+                           <div class="mac_ut_time">{{datas.stop_time}}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                   </div>
+                     <div class="col-sm-4"> <center style="font-size: 20px">{{'servoload' | translate }} </center>
+                       <div style="font-size:14px; height: 227px">
+                         <div  ng-repeat="(key,val) in datas.axis_load"> {{key}}
+                           <span class="axis_txt float-right">{{val}} %</span>
+                            <div ng-repeat="(key,val) in repeatchart track by $index" style="display: block;"></div>                       
+                             <div class="axis" ng-class="{ax_three :datas.axis_tem_count == null, ax_three :datas.axis_tem_count =='3', two :datas.axis_tem_count =='2', sd :datas.axis_tem_count =='4', sdj :datas.axis_tem_count =='5'}">
+                               <div ng-repeat="no in repeatchart[$index]">
+                              <span ng-class="no < 100 ? ( no < 80 ? 'green' : 'yellow' ) : 'red'"></span>
+                            </div>
+                           </div>
+                         </div> 
+                       </div>
+
+                    <!--       <p class="axis_value">Y-Axis <span class="axis_txt float-right">{{datas.y_axis}} %</span></p>
+                          <div class="axis">
+                              <div ng-repeat="no in [].constructor(y_axis_range) track by $index">
+                                  <span ng-class="$index*5 <100 ? ( $index*5 < 80 ? 'green' : 'yellow' ) : 'red'"></span> 
+                                </div>
+                          </div>     
+                          <p class="axis_value">Z-Axis <span class="axis_txt float-right">{{datas.z_axis}} %</span></p>
+                          <div class="axis">
+                              <div ng-repeat="no in [].constructor(z_axis_range) track by $index">
+                                  <span ng-class="$index*5 <100 ? ( $index*5 < 80 ? 'green' : 'yellow' ) : 'red'"></span> 
+                                  </div>
+                          </div>   -->  
+                          <!-- <p class="axis_value">A-Axis <span class="axis_txt float-right">{{datas.x_axis}} %</span></p> 
+                          <div class="axis">
+                            <div ng-repeat="no in [].constructor(x_axis_range) track by $index">
+
+                              <span ng-class="$index*5 <100 ? ( $index*5 < 80 ? 'green' : 'yellow' ) : 'red'"></span> 
+                            </div>
+                          </div>
+                          <p class="axis_value">B-Axis <span class="axis_txt float-right">{{datas.y_axis}} %</span></p>
+                          <div class="axis">
+                              <div ng-repeat="no in [].constructor(y_axis_range) track by $index">
+                                  <span ng-class="$index*5 <100 ? ( $index*5 < 80 ? 'green' : 'yellow' ) : 'red'"></span> 
+                                </div>
+                          </div>      -->
+
+                        <div class="rpm_holder">                          
+                            <div class="container">
+                              <div class="row">
+                                  <div class="col-sm-6">
+                                    <div id="container" style="width:100%; height:200px; margin: 0 auto"></div>
+                                  </div>
+                                  <div class="col-sm-6">
+                                    <div id="container1" style="width:100%; height:200px; margin: 0 auto"></div>
+                                  </div>
+                              </div>
+                            </div>
+                        </div>
+                      <div class="bg_grad">
+                          <center>  <h5 style="font-size: 20px; color: gray;">{{'machinestatus' | translate }}</h5>
+                             <ul class="status">
+                                <li style="padding:4px;">
+                                  <a  data-toggle="tooltip" title="Spindle Running">
+                                    <img src="assets/images/spindel-running.png">
+                                  </a>
+                                </li>
+                                <li style="padding:4px;"><a data-toggle="tooltip" title="Oil Level" data-placement="top"><img src="assets/images/oil-level.png"></a></li>
+                                <li style="padding:4px;"><a data-toggle="tooltip" title="Coolant Level"><img src="assets/images/coolant-level.png"></a></li>
+                                <li style="padding:4px;"><a data-toggle="tooltip" title="Maintenance"><img src="assets/images/maintenance.png"></a></li>
+                                <li style="padding:4px;"><a data-toggle="tooltip" title="Tool Touch"><img src="assets/images/tool-touch.png"></a></li>
+                                <li style="padding:4px;"><a data-toggle="tooltip" title="Spindle Vibration"><img src="assets/images/spindle-vibration.png"></a></li>
+                                <li style="padding:4px;"><a data-toggle="tooltip" title="Spindle Temperature"><img src="assets/images/spindle-temperature.png"></a></li>
+                                <!-- <li style="padding:4px;"><a data-toggle="tooltip" title="Alert"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a></li> -->
+                                <li style="padding:4px;"><a data-toggle="tooltip" title="Alarm"><i class="fa fa-bell" aria-hidden="true"></i></a></li>
+                                            
+                              </ul>
+                          </center>
+                              
+                        </div>
+                        <div class="bg_grad">
+                        <div class="db-recent-alrm">
+                        <div class="mac_alarm">
+                          <h5 class="brdr_botm"><i class="fa fa-bell" aria-hidden="true" style="margin-right:10px;"></i>{{'recentalarms' | translate }}</h5>
+                          <div class="brdr_top mac_alarm_innr">{{datas.alarm}}</div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    </div>
+                    <div class="col-sm-4 ">
+             
+                      <div class="bg_grad donut_small bg_grad_temp">
+                        <h5 style="font-size: 20px">{{'pulsecodetemperature' | translate }}</h5>
+                        <div class="row align-items-center">
+                          <div class="text-center brdr_right" ng-class="{col_sm_4 :datas.axis_tem_count =='3', col_sm_6 :datas.axis_tem_count =='2', col_sm_3 :datas.axis_tem_count =='4', col_sm_2 :datas.axis_tem_count =='5'}" ng-repeat="(key,val) in datas.puls_code">
+                            <div class="gradient-wrapper2">
+                             <percent-display percent=val  side="50" colors="#27272e " class="spnload"></percent-display>
+                            </div>
+                            <p>{{key}}</p>
+                          </div>                                                                                
+                         </div>
+                      </div>
+
+                     <!-- servo motor -->
+                      <div class="bg_grad donut_small bg_grad_temp">
+                       <h5 style="font-size: 20px">{{'servotemp' | translate }}</h5>
+                        <div class="row align-items-center">
+                          <div class="text-center brdr_right" ng-class="{col_sm_4 :datas.axis_tem_count =='3', col_sm_6 :datas.axis_tem_count =='2', col_sm_3 :datas.axis_tem_count =='4', col_sm_2 :datas.axis_tem_count =='5'}" ng-repeat="(key,val) in datas.axis_tem">
+                            <div class="gradient-wrapper2">
+                             <percent-display percent=val  side="50" colors="#27272e " class="spnload"></percent-display>
+                            </div>
+                           <p>{{key}}</p>
+                          </div>                                                                                
+                        </div>
+                       </div>
+
+                      <div class="bg_grad donut_small bg_grad_temp">
+                        <h5 style="font-size: 20px">{{'spindle' | translate }}</h5>
+                        <div class="row align-items-center brdr_right">
+                          <div class="col-sm-6 text-center">
+                            <div class="gradient-wrapper2"  >
+                              <percent-display percent="datas.spindle_load" side="100" colors="#27272e" class="spnload bg_grad_temp1"></percent-display> <!-- datas.spindle_load -->
+                            </div>
+                            <p style="font-size: 14px; font-weight: 800">Load</p>
+                          </div>
+                          <div class="col-sm-6 text-center brdr_left">
+                            <div class="gradient-wrapper8">
+                              <percent-display percent="datas.sp_temp" side="100" colors="#27272e " class="spnload"></percent-display> <!-- datas.spindle_load -->
+                            </div>
+                            <p style="font-size: 14px; font-weight: 800">Motor Temperature</p>
+                          </div>
+                        </div>
+                     </div>
+                     <div class="bg_grad donut_small bg_grad_temp row m-0 pl-0 pr-0">
+                      <div class="col-sm-4 mac_ut brdr_right">
+                      <h5>{{'lastcycle' | translate }} <br>{{'time' | translate}}</h5>
+                      <div class="mac_ut_time">{{datas.cycle_time}}</div>
+                      </div>
+                      <div class="col-sm-4 mac_ut brdr_mid">
+                      <h5>{{'lastcuttingtime' | translate }}</h5>
+                      <div class="mac_ut_time">{{datas.cutting_time}}</div>
+                      </div>
+                      <div class="col-sm-4 mac_ut brdr_left">
+                      <h5>{{'total' | translate }}<br> {{'run' | translate}} {{'time' | translate}}</h5>
+                      <div class="mac_ut_time">{{datas.total_run_time}}</div>
+                      </div>
+                    </div>
+                    </div>
+                  </div>      
+       </div>
+     </div>
+   <div class="sidebar-overlay"></div>
+   <div ng-include="'footer.html'"></div>
+</div>
+
+<style type="text/css">
+  footer.main-footer {
+      width: calc(100% - 20% - 90px);
+      right: 0;
+  }
+</style>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+      $(".table-scroll, .side_mec").mCustomScrollbar({
+          theme: "minimal"
+      });
+  });
+
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip(); 
+});
+
+</script>
+     

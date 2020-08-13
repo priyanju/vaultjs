@@ -1,0 +1,257 @@
+<style>
+    
+
+
+  /* .split { */
+  /* height: 100%;
+  width: 40%;
+  position: fixed;  */
+   /* z-index: 1; 
+   overflow-x: hidden;
+  padding-top: 20px;  */
+/* }  */
+
+/* Control the left side */
+/* .left { */
+  /* left: 0; */
+   
+/* }  */
+
+/*Control the right side */
+ .right {
+  /* right: 0; */
+  background-color:lightslategrey;
+  color:white;
+} 
+
+div.container.upload {
+  top:10px;
+}
+
+div.col-md-12 {
+  padding: 0;
+}
+
+.col-md-2.contro-label {
+  padding: 10px;
+  font-size: 16px;
+}
+
+.col-md-4.contro-label {
+  padding: 8px 15px 0px 15px;
+  font-size: 16px;
+}
+
+label.col-md-4.control-label { 
+  font-size: 16px;
+}
+
+table {
+ width: 100%;
+}
+
+th {
+  text-align: left;
+  padding: 5px;
+}
+td {
+  padding: 10px;
+}
+.modal-body{
+  padding: 25px;
+}
+input.base {
+  border: 1px solid #d2d2d2;
+  background-color: #ffffff;
+  color: #2d2d2d;
+  padding: 8px 11px;
+  font-size: 14px;
+  font-weight: 500;
+  width:100%;
+}
+
+</style>
+
+
+<div ng-include="'header.html'"></div>
+<div ng-include="'sidebar.html'"></div>
+<div class="page home-page">
+ <section class="viewtwo section-padding section-no-padding-bottom section_top" ng-init="machineinit()">
+      <div class="container-fluid upload">
+          <header>
+              <div ng-show="myLoader" class="spinner">
+                  <img src="assets/images/spinner.gif" class="myspin">
+              </div>
+              <h1 class="h3 display machinereg"><i class="fa fa-desktop" aria-hidden="true"></i> 
+              Machine Name</h1>
+          </header>
+              <div class="row pt-3 pb-3">
+                        <!-- <div class="col-sm-6 v_mid">   -->
+                          <!-- <div class="test"> -->
+                              
+                              <div class="col-md-4">
+                                <select name="account" class="form-control" ng-options="mc.id as mc.machine_name for mc in allmachines"
+                                    ng-model="MachineID;"  ng-Required="true" ng-change="machineChange(MachineID)">
+                                    <option value="">{{'selectmachine' | translate }}</option>
+                                </select>
+                              </div>
+                              
+                              <div class="col-md-6">
+                                <button type="button" class="float-left btn_top btn" data-toggle="modal" data-target="#modalUpload">File Upload</button>
+                            </div>
+
+</div>
+
+
+<div class="col-md-6">  
+  <h1>Backup</h1>
+
+     
+          <div class="table_wrapper">
+                <table class="table">
+                 <tr>
+                  <th>Name</th>
+                  <!-- <th>Date Modified</th>
+                  <th>Type</th>
+                  <th>File Size</th> -->
+                  <th>Actions</th>
+
+                  </tr>
+                    <tr ng-repeat="backup in backupList | orderBy:'name'">
+                     <td>
+                       {{backup}}</td>
+                     <!-- <td>{{backup['attributes']['attributes'].mtime*1000 | date : format : 'M/d/y H:m:s'}}</td>
+                     <td>{{'File'}} </td>
+                     <td>{{backup['attributes']['attributes'].size}}</td> -->
+                     <td>
+                      <div class="role-setup" >
+                          <!-- <div  class="Download" ng-click="backup(machine)" data-toggle="modal" data-target="#machine" ><i class="fa fa-download" aria-hidden="true"></i></div> -->
+                          <div><a  class="Download" ng-click="download(backup,'Backup')" data-toggle="modal" data-target="#machine" ><i class="fa fa-download" aria-hidden="true"></i></a></div>
+                             
+                      </div>
+                  </td>  
+                    </tr>
+                </table>  
+
+                <div ng-if="length1 ==0">
+
+                    No Results Found
+
+                  </div>   
+          </div>       
+
+
+</div>  
+
+</div>
+</div>
+</section>
+
+
+<div ng-include="'footer.html'"></div>   
+
+<!---modal-->
+<div class="modal fade" id="modalUpload" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">File upload</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body machine-registration">
+            <form name="cnc" >
+                  <div class="row">
+                      <label class="col-md-4 contro-label">Machine Name</label>
+                      <div class="col-md-8">
+                        <select name="account" class="form-control" ng-options="mc.id as mc.machine_name for mc in allmachines"
+                        ng-model="MachineID;"  ng-Required="true">
+                        <option value="">{{'selectmachine' | translate }}</option>
+                    </select>
+                      </div>
+                  </div>
+                    
+                  
+                   <div class="row mb-2">
+                    <label class="col-md-4 control-label">Reason</label>
+                    <div class="col-md-8">
+                      <input class="base" type="text" ng-model="myReason" placeholder="Enter the Reason" name="reason" required />
+                  </div>
+                  </div>
+
+                  <div class="row">
+                      <label class="col-md-4 control-label" for="file">File</label>
+                      <div class="col-md-8">
+                          <input type="file" ng-model="myFile" file-model="myFile" name="file" required />
+                      </div>
+                  </div>
+                 
+
+            </form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" ng-disabled="cnc.$invalid || !myFile" ng-click="uploadFile()" data-dismiss="modal" >Save</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+</div>
+</div>
+
+   <!-- modal -->
+   <!-- <div class="modal fade" id="modalUpload" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">File Upload</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body machine-registration">
+              <form name="cnc" novalidate>
+                <div class="row">
+                    <label class="col-md-4 contro-label">Machine Name</label>
+                    <div class="col-md-8">
+                      <select name="account" class="form-control" ng-options="mc.id as mc.machine_name for mc in allmachines"
+                          ng-model="MachineID;"  ng-Required="true">
+                          <option value="">{{'selectmachine' | translate }}</option>
+                      </select>
+                    </div>
+                </div>
+                 
+                <div class="row mb-2">
+                  <label class="col-md-4 control-label">Reason</label>
+                  <div class="col-md-8">
+                    <input class="base" type="text" ng-model="myReason" placeholder="Enter the Reason" name="reason" required />
+                </div>
+
+
+                <div class="row">
+                    <label class="col-md-4 control-label" for="file">File</label>
+                    <div class="col-md-8">
+                        <input type="file" ng-model="myFile" file-model="myFile" name="file" required />
+                    </div>
+                </div>
+               
+                        
+                <div class="row">
+                  <label class="col-md-4 control-label">Reason</label>
+                  <div class="col-md-8">
+                    <input type="text" ng-model="myReason"  name="reason" required />
+                </div>
+                </div>
+          </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-disabled="cnc.$invalid || !myFile" ng-click="uploadFile()" data-dismiss="modal" >Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div> -->
+
+

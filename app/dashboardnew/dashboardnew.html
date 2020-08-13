@@ -1,0 +1,377 @@
+
+<html>
+<head>
+	<title></title>
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+	<style type="text/css">
+		body{
+			background: #262932;
+			color: #fff;
+			font-family:'Montserrat', sans-serif;
+		}
+    .nd_holder{
+      padding: 30px 20px 58px;
+      display: flex;
+      flex-wrap: wrap;
+    }
+		.header{
+			font-size: 20px;			
+			border-bottom: 1px solid #0d0f15;
+			padding:0px 10px 10px 0px;
+			font-weight: 600;
+		}
+		.header span{
+			float: right;
+		}
+		.nd_wrapper{
+			width:24%;
+			background:#1b1d24;
+			padding: 10px;
+			/*float: left;*/
+			border-radius: 20px;
+			-webkit-border-radius: 20px;
+			-moz-border-radius: 20px;
+			margin-right: 10px;
+			margin-top: 20px;
+			cursor: pointer;
+		}
+		.nd_wrapper.green{
+			border: 2px solid #2cbf56;
+		}
+		.nd_wrapper.no_data{
+			border: 2px solid #5f5f5f;
+		}
+		.nd_wrapper.yellow{
+			border: 2px solid #d89d23;
+		}
+		.nd_wrapper.red{
+			border: 2px solid #e53210;
+		}
+		.m_utilized{
+			border-top: 1px solid #404554;
+			width: 100%;
+			padding-top: 10px;
+			margin-bottom: 10px;
+	   }
+		.m_utilized_inner.left{
+			margin-top:15px;
+      width:45%;
+      float: left;
+      text-align: center;
+		}
+    .m_utilized_inner.right{
+      margin-top:0px;
+      width:55%;
+      float: right;
+      text-align: center;
+    }
+		.utilized_inner_right{
+			width:48%;
+			float: right;
+			background: #0d0f15;
+			padding: 10px;
+			border-radius:10px;
+			-webkit-border-radius:10px;
+			text-align: center;
+      font-size: 14px;
+		}
+		.utilized_inner_left{
+			width:50%;
+			float: left;
+			background: #0d0f15;
+			padding: 10px;
+			border-radius:10px;
+			-webkit-border-radius:10px;
+			text-align: center;
+      font-size: 14px;
+		}
+		.utilized_inner_right.green{
+			border:1px solid #41c54e;
+		}
+		.utilized_inner_left.green{
+			border:1px solid #41c54e;
+		}
+		.utilized_inner_right.no_data{
+			border:1px solid #5f5f5f;
+		}
+		.utilized_inner_left.no_data{
+			border:1px solid #6a6a6a;
+		}
+		.utilized_inner_right.yellow{
+			border:1px solid #d89d23;
+		}
+		.utilized_inner_left.yellow{
+			border:1px solid #d89d23;
+		}
+		.utilized_inner_right.red{
+			border:1px solid #e53210;
+		}
+		.utilized_inner_left.red{
+			border:1px solid #e53210;
+		}
+		.lrg_txt{
+			font-size:26px!important;
+			text-align: center;
+			font-weight: 700;
+			display: block;
+		}
+		.clear{
+			height: 1px;
+			clear: both;
+		}
+		.c_time{
+			text-align: center;
+			border-bottom: 1px solid #0d0f15;
+			margin:14px 0 0;
+			padding-bottom: 5px;
+		}
+		.c_time h2{
+			font-size: 16px;
+			padding: 0;
+			margin: 0;
+		}
+		.c_time span.green{
+			font-size: 28px;
+			color: #41c54e;
+			font-weight: 800;
+		}
+		.c_time span.no_data{
+			font-size: 28px;
+			color:  #5f5f5f;
+			font-weight: 800;
+		}
+		.c_time span.yellow{
+			font-size: 28px;
+			color: #d89d23;
+			font-weight: 800;
+		}
+		.c_time span.red{
+			font-size: 28px;
+			color: #e53210;
+			font-weight: 800;
+		}
+		.parts_count{
+      padding-top:10px;
+			border-top: 1px solid #404554;
+			text-align: center;
+		}
+	
+    .arrow_green{
+    	display: flex;
+    	width:50%;
+    	float: left;
+    	margin-bottom:10px;
+    }
+
+    .arrow_green1{
+      display: flex;
+      width: 60%;
+      margin: 15px auto 0 auto;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+    .arrow_green_left{
+    	background: url("assets/images/arrow_green_left.png");
+    	width:28px;
+    	height: 52px;
+    	float: left;
+    }
+    .arrow_green_right{
+    	background: url("assets/images/arrow_green_right.png");
+    	width:28px;
+    	height: 52px;
+    	float: right;
+    }
+    .arrow_green_mid{
+    	width: 65%;
+    	background: url("assets/images/arrow_green_mid.png");
+    	font-size: 12px;
+      background-repeat-y: no-repeat;
+    }
+    .arrow_red{
+    	display: flex;
+    	width:60%;
+    	margin:15px auto 0 auto;
+    	margin-bottom: 5px;
+    	font-size: 12px;
+    	margin-bottom:10px;
+    }
+    .arrow_red_left{
+    	background: url("assets/images/arrow_red_left.png");
+    	width:28px;
+    	height: 52px;
+    	float: left;
+    }
+    .arrow_red_right{
+    	background: url("assets/images/arrow_red_right.png");
+    	width:28px;
+    	height: 52px;
+    	float: right;
+    }
+    .arrow_red_mid{
+    	width:65%;
+    	background: url("assets/images/arrow_red_mid.png"); 
+      background-repeat-y: no-repeat;
+    }
+    .lrg_txt_arrow{
+    	font-size: 30px;
+      display: block;
+      line-height: 25px;
+      font-weight: 800;
+      margin-top: 7px;
+    }
+    h5.arrow_title{
+    	float: left;
+    	width: 50%;
+    	padding: 0;
+    	margin: 0;
+    	text-align: center;
+    }
+    h5.title_botm{
+    	margin: 0;
+    	padding: 0;
+    }
+    .nd_top{
+      height: 63px;
+      background: #1b1d25;
+      padding: 10px 10px 0;
+      position: sticky;
+      top: 0;
+    }
+    .nd_customer{
+       width: 200px;
+       height: 48px;
+       margin-left: 15px;
+       background: #fff;
+       color: #000;
+       text-align: center;
+       line-height: 48px;
+       font-weight: 600;
+    }   
+    .nd_logo{
+       width: 250px;
+       float: right;
+       height: 48px;
+       text-align: right;
+    } 
+    .branch{
+       float:right;
+       height:48px;
+       line-height:48px;
+       margin-right:20px;
+    }
+    .live_dash_footer footer.main-footer {
+        width: 100%;
+        right: 0;
+    }
+	</style>
+</head>
+<body>
+		<div ng-show="myLoader" class="spinner">
+				<img src="assets/images/spinner.gif"> 
+		</div>   
+  <div class="nd_top">
+		<div>
+			<!-- <img ng-show="tenant_id == 1" src="assets/images/logo_nd.jpg"> -->
+			<span style="font-size: 24px;font-weight: 550;">{{username}}&nbsp;{{lastname}}</span>
+       <div class="branch">
+         <span><!--b> {{'branch' | translate }}:</b> Hyderabad,<b> {{'today' | translate }}:</b--><b>Today:</b> {{ clock | date:'dd-MM-yyyy'}}</span> &nbsp;<span> {{ clock | date:'hh:mm:ss'}}{{ clock | date:'a'}}</span>
+				  <!-- <span class="nd_customer">{{email}}</span>  -->
+				<a title="Logout" style="font-size: 32px;margin-left: 7px;" confirmed-click="signout()" ng-confirm-click="{{'areyousurewanttologout' | translate }}"> <i class="fa fa-sign-out"></i></a>
+      </div>
+    </div>
+	</div>
+  <div class="nd_holder">
+  	<div class="nd_wrapper" ng-class="{green :val.machine_status =='3' ,red :val.machine_status=='100',no_data: val.machine_status == null,yellow : val.machine_status != '3' && val.machine_status !='100' && val.machine_status != null}" ng-repeat="(key,val) in dashboardnew" ng-click="singlemachine(val.machine_id)">
+  		<div class="header">
+           {{val.machine_name}}
+  		  	<span></span>
+  	  	<span><img src="assets/images/arrow_status.png"></span>
+			</div>
+  		<div class="m_utilized">
+  			<div class="m_utilized_inner left">  
+          <a ng-if="val.machine_status != '3' && val.machine_status !='100' && val.machine_status != null">
+            <img src="assets/images/idle.png">
+          </a>
+          <a ng-if="val.machine_status =='3'">
+            <img src="assets/images/running.png">
+          </a>
+          <a ng-if="val.machine_status=='100'">
+            <img src="assets/images/stop.png">
+					</a>
+					<a ng-if="val.machine_status== null">
+            <img src="assets/images/ic_nodata.png">
+          </a>
+        </div>
+  			<div class="m_utilized_inner right">
+          <span style="font-size:50px; display:block; font-weight:700; line-height:50px;">{{val.utilization}}%</span>{{'machineutilized' | translate }}
+        </div>
+  			<div class="clear"></div>
+			</div>
+  		<div class="Utilized">
+  			<div class="utilized_inner_left" ng-class="{green :val.machine_status =='3' ,red :val.machine_status=='100',no_data: val.machine_status == null,yellow : val.machine_status != '3' && val.machine_status !='100' && val.machine_status != null}">
+          <span class="lrg_txt" style="display:inline-block">{{val.shift_utlz}}</span>
+           <span style="font-size:14px; font-weight:700; margin-left:5px;" >hr</span>
+          <div class="clear"></div>{{'shiftutilized' | translate }}
+        </div>
+  			<div class="utilized_inner_right" ng-class="{green :val.machine_status =='3' ,red :val.machine_status=='100',no_data: val.machine_status == null,yellow : val.machine_status != '3' && val.machine_status !='100' && val.machine_status != null}">
+          <span class="lrg_txt" style="display:inline-block">{{val.non_utlz}}</span>
+           <span style="font-size:14px; font-weight:700; margin-left:5px;" >hr</span>
+          <div class="clear"></div>{{'nonutilized' | translate }}
+        </div>
+  			<div class="clear"></div>
+			</div>
+  		<div class="c_time">
+  			<h2>{{'cycletime' | translate }}</h2>
+  			<span ng-class="{green :val.machine_status =='3' ,red :val.machine_status=='100',no_data: val.machine_status == null,yellow : val.machine_status != '3' && val.machine_status !='100' && val.machine_status != null}">{{val.cycle_time}}</span>
+			</div>
+  		<div class="parts_count">
+  			<h4>{{'partscount' | translate }}</h4>
+  			 <div class="arrow_green">
+  			  	<div class="arrow_green_left"></div>
+  			    	<div class="arrow_green_mid">
+  				    	<span class="lrg_txt_arrow">{{val.target}}</span>{{'nos' | translate }}
+  				    </div>
+  			   	<div class="arrow_green_right"></div>
+  			</div>
+  			<div class="arrow_green">
+  				<div class="arrow_green_left"></div>
+  			  	<div class="arrow_green_mid">
+  				  	<span class="lrg_txt_arrow">{{val.parts}}</span>{{'nos' | translate }}
+  			  	</div>
+  				<div class="arrow_green_right"></div>
+				</div>
+  	<h5 class="arrow_title">{{'target' | translate }}</h5>
+  	<h5 class="arrow_title">{{'actual' | translate }}</h5>
+				<div class="clear"></div>
+  			<div class="arrow_red" ng-show="val.balance == 0">
+  				<div class="arrow_red_left"></div>
+  			  	<div class="arrow_red_mid">
+  				  	<span class="lrg_txt_arrow">{{val.balance}}</span>{{'nos' | translate }}
+  		  		</div>
+  				<div class="arrow_red_right"></div>
+  			</div>
+        <h5 class="title_botm" ng-show="val.balance == 0">{{'shortfall' | translate }}/ {{'excess' | translate }}</h5>
+        <div class="arrow_red" ng-show="val.balance > 0">
+          <div class="arrow_red_left"></div>
+            <div class="arrow_red_mid">
+              <span class="lrg_txt_arrow">{{val.balance}}</span>{{'nos' | translate }}
+             </div>
+            <div class="arrow_red_right"></div>
+        </div>
+        <h5 class="title_botm" ng-show="val.balance > 0"> {{'shortfall' | translate }} </h5>
+        <div class="arrow_green1"  ng-show="val.balance < 0">
+          <div class="arrow_green_left"></div>
+           <div class="arrow_green_mid">
+            <span class="lrg_txt_arrow">{{(val.balance +'').replace('-', '') }}</span>{{'nos' | translate }}
+           </div>
+          <div class="arrow_green_right"></div>
+        </div>                           
+        <h5 class="title_botm" ng-show="val.balance < 0"> {{'excess' | translate }}</h5>
+      </div>
+  	</div>	
+	</div>
+  <div class="live_dash_footer" ng-include="'footer.html'"></div>
+</body>
+</html>
+

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div class="page login-page" ng-cloak="true">
+     <div class="alert alert-success alert-dismissable" ng-show="logInfo == 1">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Thanks For Registering with us !</strong>  We will get in touch with you shortly via Email.   
+     </div>
+      <div class="container">
+        <div class="form-outer d-flex align-items-center">
+          <div class="form-inner">
+            <div class="logo text-center"><img src="assets/images/logo.jpg"></div>
+            <p class="text-center">{{'signintocontinue' | translate}}</p>
+            <form id="login-form" method="post">
+              <div class="form-group">
+                <label for="login-username" class="label-custom">{{'username' | translate}}</label>
+                <input id="login-username" type="text" name="loginUsername" ng-model="login.email_id" ng-Required="true" autocomplete="off" autofocus>
+              </div>
+              <div class="form-group">
+                <label for="login-password" class="label-custom">{{'password' | translate}} </label>
+                  <input id="login-password" type="{{inputType}}" name="loginPassword" ng-model="login.password" ng-Required="true" autocomplete="off">
+              <i class="fa fa-eye-slash" aria-hidden="true" ng-click="hideShowPassword()"></i>
+           
+              </div>
+              <button class="btn btn-primary btn-block btn-small" ng-click="signin()"><a id="login" >{{'login' | translate}}</a></button>
+              <!--div ng-click="signin()"><a id="login" class="btn btn-primary btn-block">Login</a></div-->
+              <!-- This should be submit button but I replaced it with <a> for demo purposes-->
+            </form><a href="#" data-toggle="modal" data-target="#forgot" class="forgot-pass text-center" ng-click="clearForgot()">{{'forgotpassword' | translate}}?</a>
+             <a href="/#!/wifi" data-toggle="modal"  class="forgot-pass text-center">{{'WIFI_Config'}}</a>
+            <div class="login_footer">
+            <small>{{'haveaccount' | translate}}?</small><a href="/#!/registration" class="signup">{{'signup' | translate}}</a>
+            
+            <!--section class="margin-bottom-20">
+              <select class="form-control" ng-change="changeLanguage(selectedLanguage)" ng-model="selectedLanguage">
+                <option value="en">English</option> 
+                <option value="ta">தமிழ்</option>
+                <option value="hi">हिंदी</option>
+                <option value="ka">Kannada</option>
+              </select>
+            </section-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="modal fade" id="forgot" tabindex="-1" role="dialog" aria-labelledby="forgot" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="forgot">{{'forgotpassword' | translate }}</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body machine-registration">
+                  <form name="forgot_form">
+                      <div class="form-group">
+                          <label>{{'emailid' | translate }}</label>
+                          <input type="email" name="input" placeholder="Email" class="form-control" ng-Required="true" ng-model="forgot.email_id">
+                          <span class="error" ng-show="forgot_form.input.$error.required">
+                            {{'required' | translate }}!</span>
+                          <span class="error" ng-show="forgot_form.input.$error.email">
+                            {{'notvalidemailid' | translate }}!</span>
+                      </div>
+                      <div class="row">
+                          <div class="col-md-12">
+                              <div class="form-group">
+                                  <label>{{'mobilenumber' | translate }} (eg:9876543210)</label>
+                                  <input type="number" placeholder="Phone Number" name="number" ng-maxlength="10" ng-minlength="10" ng-pattern="/^(?:\d{10}|\w+@\w+\.\w{2,3})$/" class="form-control" ng-Required="true" ng-model="forgot.phone_number" >
+                                  <span style="color:Red" ng-show="forgot_form.number.$error.required"> {{'required' | translate }}! </span>
+
+                                  <span style="color:Red" ng-show="forgot_form.number.$dirty&&forgot_form.number.$error.pattern">{{'onlynumbersallowedmaximum10numbers' | translate }}</span>
+                                </div>
+                          </div>
+                        
+                      </div>
+                     
+ 
+                  </form>
+ 
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" ng-disabled="forgot_form.$invalid" ng-click="forgotSubmit()">{{'send' | translate }}</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">{{'close' | translate }}</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+    <script src="assets/js/front.js"></script>
+  </body>
+</html>
+<style>
+  .error{
+     color:red;
+  }
+</style>
