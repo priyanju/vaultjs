@@ -98,6 +98,34 @@ angular.module('myApp.view2', ['ngRoute'])
 //     "position": "Master"
 // }
 
+
+
+
+$scope.new_check = function(demo){
+
+    console.log(demo,"test")
+   
+    console.log(demo)
+    console.log($rootScope.allmachines[0]['id']);
+
+    $http({
+      method: 'get',
+        url: $rootScope.api_url + 'api/v1/file_receive_from_cnc?file_name='+demo+'&&machine_id='+$scope.machineid,
+    })
+     .then(function(response) {
+      if(response.data['status']){
+        //  $scope.myLoader = false;
+         //setTimeout(function(){ alert(response.data['status']); }, 1000);
+          alert(response.data['status']);
+       $window.location.reload();
+      console.log(response)
+      }
+ },function(error){
+      console.log(error)
+    });
+
+  }
+
   $scope.download = function(machineData,position){
     console.log(machineData,position)
     
@@ -235,7 +263,10 @@ $scope.delete = function() {
      .then(function(response) {
       if(response.data['status']){
         //  $scope.myLoader = false;
-         setTimeout(function(){ alert(response.data['status']); }, 1000);
+        // setTimeout(function(){ alert(response.data['status']); }, 1000);
+          alert(response.data['status']);
+         $window.location.reload();
+         
       console.log(response)
       }
  },function(error){

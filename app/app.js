@@ -1416,8 +1416,8 @@ var hi_translations = {
          //$rootScope.api_url = "https://app.yantra24x7.com/";
         //$rootScope.api_url_report = "http://https://app.yantra24x7.com/";
 
-        $rootScope.api_url = "http://192.168.0.237:4002/";
-        $rootScope.api_url_report = "http://192.168.0.237:4002/";
+        $rootScope.api_url = "http://192.168.1.103:40010/";
+        $rootScope.api_url_report = "http://192.168.1.103:40010/";
        
 
       // $rootScope.api_url = "http://52.66.140.40/";
