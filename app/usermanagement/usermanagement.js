@@ -115,6 +115,7 @@ $http({
   .then(function(response){
     console.log(response,"role")
    $rootScope.role_ids = response.data; 
+   console.log( $rootScope.role_ids)
           $rootScope.count=$rootScope.role_ids.length
     })
 

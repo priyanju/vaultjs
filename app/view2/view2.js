@@ -9,7 +9,7 @@ angular.module('myApp.view2', ['ngRoute'])
   });
 }])
 
-.controller('View2Ctrl', function($rootScope,$scope, $http, $location, $window,fileUpload) {
+.controller('View2Ctrl', function($rootScope,$scope, $http, $location,$timeout,$window,fileUpload) {
 
  $rootScope.allmachines=[];
   $scope.fileList = [];
@@ -125,10 +125,11 @@ angular.module('myApp.view2', ['ngRoute'])
     
 
   $scope.uploadFile = function(){
-    console.log($scope.myFile,$scope.user_name,$scope.useridforedit)
+    console.log($scope.myFile,$scope.user_name,$scope.date,$scope.useridforedit)
     var file = $scope.myFile;
     var user = $scope.user_name;
-     
+     var date = $scope.date;
+     console.log(date)
     // alert(data.status);
 
     if(file!=undefined){
@@ -138,7 +139,9 @@ angular.module('myApp.view2', ['ngRoute'])
       var uploadUrl = "api/v1/file_upload";
       
 
-      $scope.uploadFileToUrl(file, uploadUrl,$scope.MachineID,$scope.user_name,$scope.revision_no,$scope.date);
+      $scope.uploadFileToUrl(file, uploadUrl,$scope.MachineID,$scope.user_name,$scope.revision_no,date)
+      console.log(date)
+      ;
       //$scope.myLoader = false;
       //$scope.uploadMachineID = "";
       $("input[type='file']").val('');
@@ -151,15 +154,15 @@ angular.module('myApp.view2', ['ngRoute'])
     
 };
 
-$scope.uploadFileToUrl = function(file, uploadUrl,machine_id,user_name,revision_no,date)
+$scope.uploadFileToUrl = function(file, uploadUrl,machine_id,date)
 {
   var fd = new FormData();
   fd.append('file', file);
   fd.append('machine_id',machine_id)
-  fd.append('user_name',user_name)
-  fd.append('revision_no',revision_no)
-  fd.append('date',date)
-
+  // fd.append('user_name',user_name)
+  fd.append('revision_no',1)
+  fd.append('date',$scope.date)
+ console.log(date)
   // fd.append('user_id',useridforedit)
 
   
@@ -235,12 +238,45 @@ $scope.delete = function() {
      .then(function(response) {
       if(response.data['status']){
         //  $scope.myLoader = false;
+        //  setTimeout(function(){ alert(response.data['status']); }, 1000);
+        alert(response.data['status']);
+         $window.location.reload();
+      console.log(response)
+
+      }
+ },function(error){
+      console.log(error)
+    }
+      // $window.location.reload();
+
+    
+    );
+
+    
+  }
+
+
+  $scope.new_check = function(demo){
+
+    console.log(demo,"test")
+   
+    console.log(demo)
+    console.log($rootScope.allmachines[0]['id']);
+
+    $http({
+      method: 'get',
+        url: $rootScope.api_url + 'api/v1/file_send_to_cnc?file_name='+demo+'&&machine_id='+$scope.machineid,
+    })
+     .then(function(response) {
+      if(response.data['status']){
+        //  $scope.myLoader = false;
          setTimeout(function(){ alert(response.data['status']); }, 1000);
       console.log(response)
       }
  },function(error){
       console.log(error)
     });
+
   }
 
   

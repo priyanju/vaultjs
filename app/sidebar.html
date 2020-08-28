@@ -119,6 +119,11 @@
           <li    ng-class="{activebar:sidepath=='codecompare'}"> <a href="http://192.168.1.48:4321/" ><i class="fa fa-clone" aria-hidden="true"></i><span>{{'CodeCompare' | translate}}</span></a></li>
 
 
+             <!-- Part Documentation -->
+
+             <li  ng-hide="role_name=='programmer'" ng-class="{activebar:sidepath=='part'}"> <a href="" ng-click="pageverification('/#!/part')"><i class="fa fa-clipboard" aria-hidden="true"></i><span>{{'Part Documentation' | translate}}</span></a></li>
+
+
           <!-- Reason -->
 
           <li  ng-hide="role_name=='programmer'" ng-class="{activebar:sidepath=='reason'}"> <a href="" ng-click="pageverification('/#!/reason')"><i class="fa fa-rocket" aria-hidden="true"></i><span>{{'Reason' | translate}}</span></a></li>

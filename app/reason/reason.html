@@ -114,6 +114,7 @@ input.base {
                          <table class="table">
                            <tr>
                            <th>#</th> 
+                           <th>Date</th>
                              <th>User Name</th>
                              <th>Machine Name</th>
                              <th>Description</th>
@@ -125,6 +126,7 @@ input.base {
                             </tr>
                             <tr ng-repeat="master in reason | orderBy:'name' | filter:query">
                                 <td>{{$index+1}}</td> 
+                                <td>{{master.create_date | date : "dd.MM.yyyy"}}</td>
                                 <td>{{master.user_name}}</td>
                                 <td>{{master.machine_name}}</td>
                                 <td>{{master.description}}</td>

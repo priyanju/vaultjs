@@ -1,0 +1,309 @@
+<!-- <style>
+    
+
+
+    /* .split { */
+    /* height: 100%;
+    width: 40%;
+    position: fixed;  */
+     /* z-index: 1; 
+     overflow-x: hidden;
+    padding-top: 20px;  */
+  /* }  */
+  
+  /* Control the left side */
+  /* .left { */
+    /* left: 0; */
+     
+  /* }  */
+  
+/*Control the right side */
+   .right {
+    /* right: 0; */
+    background-color:lightslategrey;
+    color:white;
+  } 
+
+  div.container.upload {
+    top:10px;
+  }
+
+  div.col-md-12 {
+    padding: 0;
+  }
+
+  .col-md-2.contro-label {
+    padding: 10px;
+    font-size: 16px;
+  }
+
+  .col-md-4.contro-label {
+    padding: 8px 15px 0px 15px;
+    font-size: 16px;
+  }
+
+  label.col-md-4.control-label { 
+    font-size: 16px;
+  }
+
+  table {
+   width: 100%;
+  }
+
+  th {
+    text-align: left;
+    padding: 5px;
+  }
+  td {
+    padding: 10px;
+  }
+  .modal-body{
+    padding: 25px;
+  }
+  
+</style> -->
+<style>
+    input.base {
+        border: 1px solid #d2d2d2;
+        background-color: #ffffff;
+        color: #2d2d2d;
+        padding: 8px 11px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+    
+    </style>
+    
+    <div ng-include="'header.html'"></div>
+    <div ng-include="'sidebar.html'"></div>
+     <div class="page home-page">
+       
+       <section class="viewtwo section-padding section-no-padding-bottom section_top" ng-init="machineinit()">
+           <div ng-show="myLoader" class="spinner">
+            <img src="assets/images/spinner.gif"> <!-- https://media1.tenor.com/images/a3bf29a2520198ddcbef0958f3761e14/tenor.gif?itemid=11391686.gif -->
+           </div>
+            <div class="container-fluid upload">
+                <header>
+                    <div ng-show="myLoader" class="spinner">
+                        <img src="assets/images/spinner.gif" class="myspin">
+                    </div>
+                  
+                    <div class="modal-body machine-registration">
+                      <form name="cnc" novalidate>
+                            <div class="row align-items-center">
+                                <h4 class="col-md-4 p-0">Machine Name</h4>
+                               
+                                <div class="col-md-4">
+                                  <select name="account" class="form-control" ng-options="mc.id as mc.machine_name for mc in allmachines"
+                                      ng-model="MachineID;"  ng-Required="true" ng-change="machineChange(MachineID)">
+                                      <option value="">{{'selectmachine' | translate }}</option>
+                                  </select>
+                                </div>
+    
+                                <div class="col-md-4 text-center ">
+                                    <input class="base" ng-model = "query" placeholder="Search" >
+                                    <span ng-if="(reason | filter:query)?.length==0">No Results Found<h2 style="margin-left: 26px"></h2></span></div>
+                            </div>
+                            
+    
+                            
+              <div class="row">
+                  <h1>Part Documentation</h1>
+                         
+                            <div class="table_wrapper viewtwotable"> 
+                             <table class="table">
+                               <tr>
+                               <th>#</th> 
+                                <th>Date</th>
+                                 <th>File Name</th>
+                                 <th>Machine Name</th>
+                                 <th>User Name</th>
+                                 <th>Customer Name</th>
+                                 <th>Job Name</th>
+                                 <th>Old Revision Number</th>
+                                 <th>New Revision Number</th>
+                                 <!-- <th>Actions</th> -->
+                                 <th>upload</th>
+                                 <!-- <th>download</th> -->
+                                 <th>Actions</th>
+    
+    
+                                </tr>
+                                <tr ng-repeat="master in reason | orderBy:'name' | filter:query" >
+                                   
+                                    <td>{{$index+1}}</td> 
+                                    <td>{{master.create_date | date : "dd.MM.yyyy"}}</td>
+                                    <td>{{master.file_name}}
+                                      <br>
+                                      
+                                      <button type="button" class="btn btn-primary"   data-dismiss="modal" >Version History</button>
+                                    </td>
+                                    <td>{{master.machine_name}}</td>
+                                    <td>{{master.user_name}}</td>
+                                    <td>{{master.customername}}
+                                     
+                                    </td> 
+
+                                    
+                                    <td>{{master.job_name}}</td>
+                                    <td>---</td>
+                                    <td>---</td>
+
+                                  <td>
+                                            
+                                        <div class="col-md-6">
+                                          <button type="button" class="float-left btn_top btn" data-toggle="modal" data-target="#modalUpload">File Upload</button>
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <div ng-hide="email == 'demo@gmail.com'"  class="edit" ng-click="edit(master.customername,master.job_name)" data-toggle="modal" data-target="#modelUpload" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></div>
+
+                                      
+                                    </td>
+                                    
+
+                                    
+                                    </div>
+
+
+                                    
+    
+                                    
+                                   </tr>
+
+                                  
+                                   
+                               </table>   
+                                 
+                          
+                          
+                        
+                          
+                          
+                          
+                              
+                        </div>  
+                        <!-- <div ng-if="length2 ==0">
+                          No Results Found
+                         </div> -->
+                            </div>  
+                              
+                           
+                          
+                </div><br>
+    
+    
+                            
+    
+    </div>
+    
+    
+                    <div ng-include="'footer.html'"></div>  
+
+
+
+
+                    <div class="modal fade" id="modalUpload" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">File upload</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                  </button>
+                              </div>
+                              <div class="modal-body machine-registration">
+                                  <form name="cnc" >
+                                        <!-- <div class="row">
+                                            <label class="col-md-4 contro-label">Machine Name</label>
+                                            <div class="col-md-8">
+                                              <select name="account" class="form-control" ng-options="mc.id as mc.machine_name for mc in allmachines"
+                                              ng-model="MachineID;"  ng-Required="true">
+                                              <option value="">{{'selectmachine' | translate }}</option>
+                                          </select>
+                                            </div>
+                                        </div> -->
+                                          
+                                        
+                                         <!-- <div class="row mb-2">
+                                          <label class="col-md-4 control-label">Reason</label>
+                                          <div class="col-md-8">
+                                            <input class="base" type="text" ng-model="myReason" placeholder="Enter the Reason" name="reason" required />
+                                        </div>
+                                        </div> -->
+                      
+                                        <div class="row">
+                                            <label class="col-md-4 control-label" for="file">File</label>
+                                            <div class="col-md-8">
+                                                <input type="file" ng-model="myFile" file-model="myFile" accept = ".pdf" name="file" required />
+                                            </div>
+                                        </div>
+                                       
+                      
+                                  </form>
+                      
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" ng-disabled="cnc.$invalid || !myFile" ng-click="uploadFile()" data-dismiss="modal" >Save</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              </div>
+                          </div>
+                      </div>
+                      </div>
+
+
+
+
+
+                      <!-- <h2>Priya</h2> -->
+
+
+
+                      <div class="modal fade" id="modelUpload" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Register</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body machine-registration">
+                                    <form name="cnc" >
+                                         
+                                            
+                                          
+                                           <div class="row mb-2">
+                                            <label class="col-md-4 control-label">Customer Name</label>
+                                            <div class="col-md-8">
+                                              <input class="base" type="text" ng-model="cuname" placeholder="Enter the customer name" name="reason" required />
+                                          </div>
+                                          </div>
+
+
+                                             
+                                          <div class="row mb-2">
+                                            <label class="col-md-4 control-label">Job Name</label>
+                                            <div class="col-md-8">
+                                              <input class="base" type="text" ng-model="joname" placeholder="Enter the Job name" name="reason" required />
+                                          </div>
+                                          </div>
+                        
+                                          <!-- <div class="row">
+                                              <label class="col-md-4 control-label" for="file">File</label>
+                                              <div class="col-md-8">
+                                                  <input type="file" ng-model="myFile" file-model="myFile" accept = ".pdf" name="file" required />
+                                              </div>
+                                          </div> -->
+                                         
+                        
+                                    </form>
+                        
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-primary"  ng-click="uplooadeditdata(joname,cuname)" data-dismiss="modal" >Save</button>
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                        </div>

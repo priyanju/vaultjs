@@ -160,6 +160,8 @@ input.base {
 
                                     <div><a  class="Download" ng-click="upload(master)" data-toggle="modal" data-target="#machine" ><i class="fa fa-send" aria-hidden="true"></i></a></div>
 
+                                    <div><a  class="Download" ng-click="new_check(master)" data-toggle="modal" data-target="#machine" ><i class="fa fa-cloud-upload" aria-hidden="true"></i></a></div>
+
                                     <!-- <div><a  class="Download" ng-click="new(master)" data-toggle="modal" data-target="#machine" ><i class="fa fa-send" aria-hidden="true"></i></a></div> -->
    
                                 </div> 
@@ -271,19 +273,19 @@ Above API is used in Slave -->
                             </div>
                         </div>
                           
-                        
+<!--                         
                          <div class="row mb-2">
                           <label class="col-md-4 control-label">User Name</label>
                           <div class="col-md-8">
                             <input class="base" type="text" ng-model="user_name" placeholder="Enter the UserName" name="user" required />
                         </div>
-                        </div>
+                        </div> -->
 
 
                         <div class="row mb-2">
                           <label class="col-md-4 control-label">Revision Number</label>
                           <div class="col-md-8">
-                            <input class="base" type="number" ng-model="revision_no" placeholder="Enter the Revision Number" name="revision" required />
+                            <input class="base" type="number" ng-model="revision_no" placeholder="1" name="revision" required  ng-readonly="true" >
                         </div>
                         </div>
 
@@ -320,10 +322,11 @@ Above API is used in Slave -->
                        
 
                   </form>
+                  <!-- ng-readonly="true"  -->
 
               </div>
               <div class="modal-footer">
-                  <button type="button" class="btn btn-primary" data-modal-action="close" ng-disabled="cnc.$invalid " ng-click="uploadFile()" data-dismiss="modal" >Save</button>
+                  <button type="button" class="btn btn-primary" data-modal-action="close"  ng-click="uploadFile()" data-dismiss="modal" >Save</button>
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               </div>
           </div>
