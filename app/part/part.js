@@ -155,61 +155,57 @@ $http.post($rootScope.api_url +uploadUrl, fd, {
       });
     }  
 
-    $scope.edit = function(id,test) {
+    $scope.edit = function(num,id,test) 
+    {
       // console.log(id,test);
       $scope.cuname = id;
       $scope.joname = test;
-       console.log($scope.cuname )
+      $scope.impo = num;
+      console.log(num)
+       console.log($scope.impo,$scope.joname,$scope.cuname)
       $http
 // ({
 //   method: 'put',
 //   url: $rootScope.api_url+'api/v1/part_doc_edit/'+$scope.val,
 // })
           }
+         
       
           // http://192.168.0.237:4000/api/v1/part_doc_edit?id=1
 
     $scope.uplooadFile = function(){
-      console.log($scope.jobname, $scope.customername )
+      console.log($scope.jobname, $scope.impo,$scope.customername )
 
       var job_name = $scope.jobname;
-      var customer_name = $scope.customername;
+      var id_num = $scope.impo;
+     var customer_name = $scope.customername;
       console.log(customer_name) 
       console.log(job_name)
+      console.log(id_num)
 
-      // var reason = $scope.myReason;
-      // uplooadeditdata()
-    //  alert(data);
-    
-      // if(file!=undefined){
-      //   $scope.myLoader = true;
-      //   $scope.getFile = file;
-      //   console.log($scope.getFile)
-        
-      //   var uploadUrl = "api/v1/part_doc_upload";
-        
-    
-      //   $scope.uploadFileToUrl(file, uploadUrl,$scope.MachineID);
-      //   //$scope.myLoader = false;
-      //   //$scope.uploadMachineID = "";
-      //   $("input[type='file']").val('');
-      //   $("input[type='text']").val('');
-       
-      // }else{
-      //   alert("Please select any file to upload")
-      // }
-    
-      
+
     };
-    $scope.uplooadeditdata = function(cuname,gjgj) {
-    console.log(cuname,gjgj)
+      
+    
+    $scope.uplooadeditdata = function(id,cuname,gjgj) {
+    console.log(id,cuname,gjgj)
 
     $http
 ({
   method: 'put',
-  url: $rootScope.api_url+'api/v1/part_doc_edit/'+cuname,gjgj,
+  url: $rootScope.api_url+'api/v1/part_doc_edit/'+id,
 })
     }
 
+    $scope.router = function() {
+
+      $window.location = '/#!/reason';
+
+
+
+  
+     
+      }
+ 
 
 })    

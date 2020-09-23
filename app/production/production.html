@@ -1,0 +1,132 @@
+<style>
+    .fa-check{
+        color: green;
+        width: 89px;
+    } 
+    .fa-times{
+        color: red;
+    }
+</style>
+
+<div ng-include="'header.html'"></div>
+<div ng-include="'sidebar.html'"></div>
+<div class="page home-page">
+    <section class="statistics section-padding section-no-padding-bottom section_top">
+        <div class="container-fluid">
+          <header>
+	        <div ng-show="myLoader" class="spinner">
+	            <img src="assets/images/spinner.gif" class="myspin">
+	        </div>
+	        
+	        <h1 class="h3 display reprttop" style="float: left;"><i class="fa fa-laptop"></i>Production
+	     
+	        </h1>
+          </header>
+          <br>
+          <div class="card card_status">
+             <div class="card-block">
+                   <form name="repot">
+                  <div class="row">
+                         
+                      <div class="col-md-3">
+                          <div class="form-group">
+                              <div class="form-group">
+                                    <div class="select">
+                                        <label>Machine Name</label>
+                                      <!-- <select name="account" class="form-control" ng-options="mc.id as mc.machine_name for mc in allmachines" ng-model="MachineID" ng-change="checkingmachineid()" ng-Required="true">
+                                          <option value="">Select Machine</option>
+                                      </select> -->
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                    
+
+                      <div class="col-md-3" >
+                        <div class="form-group">
+                            <div class="form-group">
+                                <div class="select">
+                                        <label>Shift No</label>
+                                    <!-- <select name="account" class="form-control" ng-options="sh.id as (sh.shift_no + ' (' + sh.shift_start_time +'-'+ sh.shift_end_time + ')') for sh in shiftstransfordrop" ng-model="ShiftID"  ng-change="checkingshiftid()" ng-Required="true">
+                                        <option value="">Select Shift</option>
+                                    </select> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                      
+
+                     
+
+                      <div class="col-md-3">
+                            <label>Date</label>
+
+                          <div class="form-group" moment-picker="from_date"  format="DD-MM-YYYY" min-date="momentToday2" max-date="momentToday">
+                                <div class="input-group"><span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                  <input type="text" class="form-control" readonly ng-Required="true"  ng-model="from_date"  >
+                              </div>
+                          </div>
+                      </div>
+                      
+                      <div class="col-md-3"> 
+                         
+                          <div class="form-group">
+                              <div class="form-group">
+                                  <button class="btn btn-success btn_report"  ><i class="fa fa-eye" aria-hidden="true"></i> Submit</button>
+                                  <!-- <button class="btn btn-success btn_report" ng-click="viewChart()" ng-disabled="repot.$invalid"><i class="fa fa-eye" aria-hidden="true"></i> Chart</button> -->
+                              </div>
+                          </div>
+                      </div>
+
+
+                  </div>
+                </form>
+           </div>
+        </div>
+     </div>
+    </section>
+     <section class="updates">
+    <div class="container-fluid">
+            <table class="table table-striped scroll-table" >
+                    <thead>
+                       <tr>
+                           <th>S.NO</th>
+                           <th>Part Start Time</th>
+                           <th>Part End Time</th>
+                           <th>Part Count</th>
+                           <th>Actions</th>
+                           <!-- <th>Machine ID </th>
+                           <th>Machine Name</th>
+                           <th>Idle Duration</th>
+                           <th>Idle Time</th>
+                           <th>Reason</th> -->
+                       </tr>
+                   </thead>
+                   <tbody>
+                       <tr >
+                           <td>1</td>
+                           <td>04-02-2020</td>
+                           <td>08-02-2020</td>
+                           <td>21</td>
+                           <td>
+
+                            <div class="role-setup" >
+                                <div  class="edit" ng-click="edit(machine)" ><i class="fa fa-check" aria-hidden="true"></i></div>
+                                <!-- <div ng-hide="email == 'demo@gmail.com'"  class="edit" ng-click="axisfun(machine.id)" data-toggle="modal" data-target="#machine1"><i class="fa fa-cog" aria-hidden="true"></i></div> -->
+                                <div  class="delete" ><i class="fa fa-times" aria-hidden="true"></i></div>        
+                            </div>
+                           </td>
+                           <!-- <td>{{ item.machine_id }}</td>
+                           <td>{{ item.machine_name }}</td>
+                           <td>{{ item.duration }}</td>
+                         <td>{{ item.idle_time }}</td>
+                           <td>{{ item.description }}</td> -->
+                       </tr>
+                     
+                   </tbody>
+               </table>
+        </div>
+    
+    </section>
+</div>
+</body>

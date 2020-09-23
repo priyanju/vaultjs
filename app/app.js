@@ -7,6 +7,10 @@ angular.module('myApp', [
   'myApp.view2',
   'frontpage',
      'wifi' ,
+     'new',
+     'screen',
+     'production',
+     'availability',
   'login',
   'compare',
   'registrations',
@@ -1419,6 +1423,9 @@ var hi_translations = {
 
         $rootScope.api_url = "http://192.168.0.237:4000/";
         $rootScope.api_url_report = "http://192.168.0.237:4000/";
+
+        // $rootScope.api_url = "http://192.168.1.103:40010/";
+        // $rootScope.api_url_report = "http://192.168.1.103:40010/";
        
 
       // $rootScope.api_url = "http://52.66.140.40/";

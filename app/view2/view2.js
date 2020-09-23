@@ -98,6 +98,34 @@ angular.module('myApp.view2', ['ngRoute'])
 //     "position": "Master"
 // }
 
+
+
+
+$scope.new_check = function(demo){
+
+    console.log(demo,"test")
+   
+    console.log(demo)
+    console.log($rootScope.allmachines[0]['id']);
+
+    $http({
+      method: 'get',
+        url: $rootScope.api_url + 'api/v1/file_receive_from_cnc?file_name='+demo+'&&machine_id='+$scope.machineid,
+    })
+     .then(function(response) {
+      if(response.data['status']){
+        //  $scope.myLoader = false;
+         //setTimeout(function(){ alert(response.data['status']); }, 1000);
+          alert(response.data['status']);
+       $window.location.reload();
+      console.log(response)
+      }
+ },function(error){
+      console.log(error)
+    });
+
+  }
+
   $scope.download = function(machineData,position){
     console.log(machineData,position)
     
@@ -154,19 +182,17 @@ angular.module('myApp.view2', ['ngRoute'])
     
 };
 
-$scope.uploadFileToUrl = function(file, uploadUrl,machine_id,date)
+$scope.uploadFileToUrl = function(file, uploadUrl,machine_id)
 {
   var fd = new FormData();
   fd.append('file', file);
   fd.append('machine_id',machine_id)
   // fd.append('user_name',user_name)
   fd.append('revision_no',1)
-  fd.append('date',$scope.date)
- console.log(date)
   // fd.append('user_id',useridforedit)
 
   
-  console.log(file)
+  console.log(fd)
   $http.post($rootScope.api_url +uploadUrl, fd, {
       transformRequest: angular.identity,
       headers: {'Content-Type': undefined}
@@ -238,6 +264,7 @@ $scope.delete = function() {
      .then(function(response) {
       if(response.data['status']){
         //  $scope.myLoader = false;
+
         //  setTimeout(function(){ alert(response.data['status']); }, 1000);
         alert(response.data['status']);
          $window.location.reload();
@@ -265,12 +292,17 @@ $scope.delete = function() {
 
     $http({
       method: 'get',
-        url: $rootScope.api_url + 'api/v1/file_send_to_cnc?file_name='+demo+'&&machine_id='+$scope.machineid,
+        url: $rootScope.api_url + 'api/v1/file_receive_from_cnc?file_name='+demo+'&&machine_id='+$scope.machineid,
     })
      .then(function(response) {
       if(response.data['status']){
         //  $scope.myLoader = false;
          setTimeout(function(){ alert(response.data['status']); }, 1000);
+
+        // setTimeout(function(){ alert(response.data['status']); }, 1000);
+          alert(response.data['status']);
+         $window.location.reload();
+         
       console.log(response)
       }
  },function(error){

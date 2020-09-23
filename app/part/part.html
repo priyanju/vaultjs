@@ -136,7 +136,7 @@
                                     <td>{{master.file_name}}
                                       <br>
                                       
-                                      <button type="button" class="btn btn-primary"   data-dismiss="modal" >Version History</button>
+                                      <button type="button" class="btn btn-primary"   data-dismiss="modal" ng-click="router()">Version History</button>
                                     </td>
                                     <td>{{master.machine_name}}</td>
                                     <td>{{master.user_name}}</td>
@@ -156,7 +156,7 @@
                                       </div>
                                     </td>
                                     <td>
-                                      <div ng-hide="email == 'demo@gmail.com'"  class="edit" ng-click="edit(master.customername,master.job_name)" data-toggle="modal" data-target="#modelUpload" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></div>
+                                      <div ng-hide="email == 'demo@gmail.com'"  class="edit" ng-click="edit(master.id,master.customername,master.job_name)" data-toggle="modal" data-target="#modelUpload" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></div>
 
                                       
                                     </td>
@@ -244,7 +244,7 @@
                       
                               </div>
                               <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" ng-disabled="cnc.$invalid || !myFile" ng-click="uploadFile()" data-dismiss="modal" >Save</button>
+                                <button type="button" class="btn btn-primary"  ng-click="uploadFile()" data-dismiss="modal" >Save</button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                               </div>
                           </div>
@@ -288,6 +288,13 @@
                                               <input class="base" type="text" ng-model="joname" placeholder="Enter the Job name" name="reason" required />
                                           </div>
                                           </div>
+
+                                          <div class="row mb-2">
+                                            <label class="col-md-4 control-label">ID</label>
+                                            <div class="col-md-8">
+                                              <input class="base" type="text" ng-model="impo" ng-readonly="true"  name="id" required />
+                                          </div>
+                                          </div>
                         
                                           <!-- <div class="row">
                                               <label class="col-md-4 control-label" for="file">File</label>
@@ -301,7 +308,7 @@
                         
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="button" class="btn btn-primary"  ng-click="uplooadeditdata(joname,cuname)" data-dismiss="modal" >Save</button>
+                                  <button type="button" class="btn btn-primary"  ng-click="uplooadeditdata(impo,joname,cuname)" data-dismiss="modal" >Save</button>
                                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
